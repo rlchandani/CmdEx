@@ -7,6 +7,8 @@ struct DataManagementView: View {
     let store: StoreOf<AppFeature>
     @State private var importResult: String?
 
+    @State private var exportResult: String?
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -46,6 +48,16 @@ struct DataManagementView: View {
                                     .controlSize(.small)
                             }
                         }
+                    }
+                }
+
+                if let exportResult {
+                    HStack {
+                        Image(systemName: exportResult.hasPrefix("✓") ? "checkmark.circle.fill" : "xmark.circle.fill")
+                            .foregroundStyle(exportResult.hasPrefix("✓") ? .green : .red)
+                        Text(exportResult)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
                 }
 
@@ -121,8 +133,12 @@ struct DataManagementView: View {
 
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        if let json = try? encoder.encode(data) {
-            try? json.write(to: url)
+        do {
+            let json = try encoder.encode(data)
+            try json.write(to: url)
+            exportResult = "✓ Exported to \(url.lastPathComponent)"
+        } catch {
+            exportResult = "✗ Export failed: \(error.localizedDescription)"
         }
     }
 

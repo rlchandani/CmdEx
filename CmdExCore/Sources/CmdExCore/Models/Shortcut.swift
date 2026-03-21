@@ -62,4 +62,11 @@ public struct Shortcut: Identifiable, Codable, Equatable, Sendable {
             result.replacingOccurrences(of: "{\(pair.key)}", with: pair.value)
         }
     }
+
+    /// Resolves placeholders with shell-escaped values for safe use in shell/terminal commands.
+    public func resolvedCommandShellEscaped(with values: [String: String]) -> String {
+        values.reduce(command) { result, pair in
+            result.replacingOccurrences(of: "{\(pair.key)}", with: SBEscape.shellArgument(pair.value))
+        }
+    }
 }

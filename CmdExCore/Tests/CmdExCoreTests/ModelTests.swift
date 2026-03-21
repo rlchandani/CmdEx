@@ -131,3 +131,40 @@ struct AppSettingsTests {
         #expect(decoded == s)
     }
 }
+
+@Suite("Shell Escaping")
+struct ShellEscapingTests {
+    @Test("Single quotes are escaped")
+    func singleQuotes() {
+        #expect(SBEscape.shellArgument("hello'world") == "'hello'\\''world'")
+    }
+
+    @Test("Normal string is wrapped in single quotes")
+    func normalString() {
+        #expect(SBEscape.shellArgument("hello") == "'hello'")
+    }
+
+    @Test("Semicolons and pipes are neutralized")
+    func injectionAttempt() {
+        let escaped = SBEscape.shellArgument("; rm -rf /")
+        #expect(escaped == "'; rm -rf /'")
+    }
+}
+
+@Suite("AppleScript Escaping")
+struct AppleScriptEscapingTests {
+    @Test("Double quotes are escaped")
+    func doubleQuotes() {
+        #expect(SBEscape.appleScriptString("say \"hello\"") == "say \\\"hello\\\"")
+    }
+
+    @Test("Backslashes are escaped")
+    func backslashes() {
+        #expect(SBEscape.appleScriptString("path\\to") == "path\\\\to")
+    }
+
+    @Test("Newlines are escaped")
+    func newlines() {
+        #expect(SBEscape.appleScriptString("line1\nline2") == "line1\\nline2")
+    }
+}

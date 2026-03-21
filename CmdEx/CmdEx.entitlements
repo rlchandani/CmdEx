@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<!--
+    App Sandbox is intentionally NOT enabled.
+    CmdEx requires:
+    - Unrestricted filesystem access for shell commands and file/folder shortcuts
+    - AppleScript automation to control terminal emulators
+    - Process spawning via /bin/zsh for shell command execution
+    These capabilities are incompatible with the App Sandbox.
+    Distribution is via GitHub Releases (direct download), not the Mac App Store.
+-->
 <dict>
     <key>com.apple.security.automation.apple-events</key>
     <true/>

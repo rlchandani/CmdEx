@@ -147,8 +147,7 @@ extension ExecutorClient: DependencyKey {
         executeTerminal: { command, terminalBundleId, behavior in
             await MainActor.run {
                 let logger = SBLog.terminal
-                let escaped = command.replacingOccurrences(of: "\\", with: "\\\\")
-                    .replacingOccurrences(of: "\"", with: "\\\"")
+                let escaped = SBEscape.appleScriptString(command)
 
                 let isInstalled = NSWorkspace.shared.urlForApplication(withBundleIdentifier: terminalBundleId) != nil
                 let activeBundleId = isInstalled ? terminalBundleId : "com.apple.Terminal"

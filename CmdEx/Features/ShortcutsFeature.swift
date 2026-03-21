@@ -13,6 +13,7 @@ struct ShortcutsFeature {
         var lastUsedValues: [String: [String: String]] = [:]
         var recentIds: [Shortcut.ID] = []
         var isLoading = false
+        @Shared(.appSettings) var settings: AppSettings
 
         var recentShortcuts: [Shortcut] {
             recentIds.compactMap { shortcuts[id: $0] }.prefix(3).map { $0 }
@@ -47,6 +48,7 @@ struct ShortcutsFeature {
         case toggleDisableAll
         case exportJSON
         case toggleScreenshotWatcher
+        case screenshotDetected(path: String)
     }
 
     @Dependency(\.persistence) var persistence
@@ -131,10 +133,9 @@ struct ShortcutsFeature {
                 state.recentIds.insert(shortcut.id, at: 0)
                 if state.recentIds.count > 5 { state.recentIds = Array(state.recentIds.prefix(5)) }
 
-                @Shared(.appSettings) var settings
-                let browser = settings.preferredBrowser
-                let terminal = settings.preferredTerminal
-                let editor = settings.preferredEditor
+                let browser = state.settings.preferredBrowser
+                let terminal = state.settings.preferredTerminal
+                let editor = state.settings.preferredEditor
                 return .run { send in
                     let result: ExecutionResult
                     switch shortcut.commandType {
@@ -201,12 +202,21 @@ struct ShortcutsFeature {
                 }
 
             case .toggleScreenshotWatcher:
-                @Shared(.appSettings) var settings
-                $settings.withLock { $0.screenshotWatcherEnabled.toggle() }
-                let enabled = settings.screenshotWatcherEnabled
+                state.$settings.withLock { $0.screenshotWatcherEnabled.toggle() }
+                let enabled = state.settings.screenshotWatcherEnabled
                 return .run { [toast, enabled] _ in
                     await screenshotClient.setEnabled(enabled)
                     await toast.show("Screenshot watcher \(enabled ? "enabled" : "disabled")")
+                }
+
+            case let .screenshotDetected(path):
+                return .run { [toast] _ in
+                    await MainActor.run {
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(path, forType: .string)
+                    }
+                    let filename = (path as NSString).lastPathComponent
+                    await toast.show("Path copied: \(filename)")
                 }
             }
         }
@@ -220,7 +230,14 @@ struct ShortcutsFeature {
             groups: Array(state.groups),
             lastUsedValues: state.lastUsedValues
         )
-        return .run { _ in try await persistence.save(data) }
+        return .run { [toast] _ in
+            do {
+                try await persistence.save(data)
+            } catch {
+                SBLog.store.error("Save failed: \(error.localizedDescription)")
+                await toast.show("Save failed: \(error.localizedDescription)")
+            }
+        }
     }
 }
 

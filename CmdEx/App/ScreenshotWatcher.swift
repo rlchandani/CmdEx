@@ -79,6 +79,9 @@ final class ScreenshotWatcher {
         SBLog.app.info("Screenshot watcher stopped")
     }
 
+    /// Called when a new screenshot is detected. Wired by AppDelegate to send a store action.
+    var onScreenshotDetected: ((String) -> Void)?
+
     private func handleFSEvent() {
         let dir = watchPath
         guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir) else { return }
@@ -100,14 +103,11 @@ final class ScreenshotWatcher {
                 try FileManager.default.copyItem(atPath: originalPath, toPath: tmpPath)
             } catch {
                 SBLog.app.error("Screenshot copy failed: \(error.localizedDescription)")
-                ToastWindow.instance.showToast("Copy failed: \(error.localizedDescription)")
                 return
             }
 
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(tmpPath, forType: .string)
-            ToastWindow.instance.showToast("Path copied: \((tmpPath as NSString).lastPathComponent)")
             SBLog.app.info("Screenshot path copied: \(tmpPath)")
+            onScreenshotDetected?(tmpPath)
         }
     }
 }

@@ -41,6 +41,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         Self.appStore.send(.task)
 
         syncLaunchAtLogin()
+        ScreenshotWatcher.instance.onScreenshotDetected = { path in
+            Self.appStore.send(.shortcuts(.screenshotDetected(path: path)))
+        }
         ScreenshotWatcher.instance.startIfEnabled()
     }
 

@@ -141,7 +141,14 @@ final class MenuBarManager: NSObject {
         var values: [String: String] = [:]
         for (name, field) in fields { values[name] = field.stringValue }
         store.send(.shortcuts(.saveLastUsed(shortcut.id, values)))
-        store.send(.shortcuts(.executeShortcut(shortcut, resolvedCommand: shortcut.resolvedCommand(with: values))))
+        let resolved: String
+        switch shortcut.commandType {
+        case .shell, .terminal:
+            resolved = shortcut.resolvedCommandShellEscaped(with: values)
+        case .app, .url, .fileOrFolder, .editor:
+            resolved = shortcut.resolvedCommand(with: values)
+        }
+        store.send(.shortcuts(.executeShortcut(shortcut, resolvedCommand: resolved)))
         flashIcon()
     }
 
