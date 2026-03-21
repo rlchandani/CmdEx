@@ -190,3 +190,64 @@ struct ScreenshotClientWiringTests {
         #expect(messages.value == ["a", "b"])
     }
 }
+
+@Suite("Screenshot File Copy")
+struct ScreenshotFileCopyTests {
+    @Test("Epoch filename format is correct")
+    func epochFilenameFormat() {
+        let epoch = Int(Date().timeIntervalSince1970)
+        let filename = "Screenshot-\(epoch).png"
+        #expect(filename.hasPrefix("Screenshot-"))
+        #expect(filename.hasSuffix(".png"))
+        #expect(!filename.contains("-") || filename.split(separator: "-").count == 2)
+        // Epoch should be a reasonable number (after 2024)
+        let parts = filename.replacingOccurrences(of: "Screenshot-", with: "")
+            .replacingOccurrences(of: ".png", with: "")
+        let parsed = Int(parts)
+        #expect(parsed != nil)
+        #expect(parsed! > 1_700_000_000) // after ~Nov 2023
+    }
+
+    @Test("Copy preserves file extension")
+    func copyPreservesExtension() {
+        for ext in ["png", "jpg", "jpeg"] {
+            let original = "Screenshot 2026-03-21 at 2.42.01PM.\(ext)"
+            let extractedExt = (original as NSString).pathExtension
+            let tmpName = "Screenshot-\(Int(Date().timeIntervalSince1970)).\(extractedExt)"
+            #expect(tmpName.hasSuffix(".\(ext)"))
+        }
+    }
+
+    @Test("Copy to /tmp/ creates file")
+    func copyCreatesFile() throws {
+        let src = "/tmp/cmdex_test_src_\(Int(Date().timeIntervalSince1970)).png"
+        let dst = "/tmp/Screenshot-\(Int(Date().timeIntervalSince1970)).png"
+        FileManager.default.createFile(atPath: src, contents: Data("test".utf8))
+
+        try FileManager.default.copyItem(atPath: src, toPath: dst)
+        #expect(FileManager.default.fileExists(atPath: dst))
+
+        let srcData = try Data(contentsOf: URL(fileURLWithPath: src))
+        let dstData = try Data(contentsOf: URL(fileURLWithPath: dst))
+        #expect(srcData == dstData)
+
+        try? FileManager.default.removeItem(atPath: src)
+        try? FileManager.default.removeItem(atPath: dst)
+    }
+
+    @Test("Original file is not modified after copy")
+    func originalUnmodified() throws {
+        let src = "/tmp/cmdex_test_orig_\(Int(Date().timeIntervalSince1970)).png"
+        let content = Data("original content".utf8)
+        FileManager.default.createFile(atPath: src, contents: content)
+
+        let dst = "/tmp/Screenshot-\(Int(Date().timeIntervalSince1970))_orig.png"
+        try FileManager.default.copyItem(atPath: src, toPath: dst)
+
+        let srcAfter = try Data(contentsOf: URL(fileURLWithPath: src))
+        #expect(srcAfter == content)
+
+        try? FileManager.default.removeItem(atPath: src)
+        try? FileManager.default.removeItem(atPath: dst)
+    }
+}

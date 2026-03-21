@@ -111,7 +111,7 @@ final class ScreenshotWatcher {
         if let newest = newFiles.sorted().last {
             let originalPath = (dir as NSString).appendingPathComponent(newest)
             let ext = (newest as NSString).pathExtension
-            let tmpPath = "/tmp/Screenshot-\(UUID().uuidString).\(ext)"
+            let tmpPath = "/tmp/Screenshot-\(Int(Date().timeIntervalSince1970)).\(ext)"
 
             try? FileManager.default.copyItem(atPath: originalPath, toPath: tmpPath)
 
