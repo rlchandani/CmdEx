@@ -2,11 +2,16 @@ import Cocoa
 import ComposableArchitecture
 import CmdExCore
 import ServiceManagement
+import Sparkle
 import SwiftUI
 import UserNotifications
 
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+    static let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil
+    )
+
     static let appStore: Store<AppFeature.State, AppFeature.Action> = {
         // Register live clients BEFORE store creation so TCA captures them
         ScreenshotClient.liveValue = ScreenshotClient(

@@ -1,4 +1,4 @@
-import AppKit
+import Sparkle
 import SwiftUI
 
 struct AboutView: View {
@@ -27,6 +27,21 @@ struct AboutView: View {
 
                         settingsRow {
                             HStack {
+                                Image(systemName: "arrow.triangle.2.circlepath")
+                                    .foregroundStyle(.secondary).frame(width: 20)
+                                Text("Updates")
+                                Spacer()
+                                Button("Check for Updates") {
+                                    AppDelegate.updaterController.checkForUpdates(nil)
+                                }
+                                .controlSize(.small)
+                            }
+                        }
+
+                        Divider().padding(.horizontal, 12)
+
+                        settingsRow {
+                            HStack {
                                 Image(systemName: "doc.text")
                                     .foregroundStyle(.secondary).frame(width: 20)
                                 Text("Changelog")
@@ -44,7 +59,7 @@ struct AboutView: View {
                                     .foregroundStyle(.secondary).frame(width: 20)
                                 Text("CmdEx is open source")
                                 Spacer()
-                                Link("Visit GitHub", destination: URL(string: "https://github.com/rlchandani")!)
+                                Link("Visit GitHub", destination: URL(string: "https://github.com/rlchandani/CmdEx")!)
                                     .font(.callout)
                             }
                         }

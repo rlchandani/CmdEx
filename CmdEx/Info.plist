@@ -18,6 +18,10 @@
     <string>15.0</string>
     <key>NSAppleEventsUsageDescription</key>
     <string>CmdEx needs to send commands to terminal applications.</string>
+    <key>SUFeedURL</key>
+    <string>https://github.com/rlchandani/CmdEx/releases/latest/download/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>oXVaTrKGxjkAnZXGkwVABWNWiNvZg9SR1B2zlnkiJU8=</string>
     <key>NSUserNotificationAlertStyle</key>
     <string>banner</string>
 </dict>
