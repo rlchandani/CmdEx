@@ -3,19 +3,8 @@ import ComposableArchitecture
 import Foundation
 import CmdExCore
 
-private extension DateFormatter {
-    static let screenshotFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-        f.locale = Locale(identifier: "en_US_POSIX")
-        return f
-    }()
-}
-
 @MainActor
 final class ScreenshotWatcher {
-    var onToast: (@MainActor (String) -> Void)?
-
     static let instance = ScreenshotWatcher()
 
     private var stream: FSEventStreamRef?
@@ -42,6 +31,7 @@ final class ScreenshotWatcher {
     }
 
     var watchPath: String {
+        // Reading macOS system screenshot preference — not app state
         if let domain = UserDefaults(suiteName: "com.apple.screencapture"),
            let location = domain.string(forKey: "location") {
             return (location as NSString).expandingTildeInPath
@@ -113,7 +103,13 @@ final class ScreenshotWatcher {
             let ext = (newest as NSString).pathExtension
             let tmpPath = "/tmp/Screenshot-\(Int(Date().timeIntervalSince1970)).\(ext)"
 
-            try? FileManager.default.copyItem(atPath: originalPath, toPath: tmpPath)
+            do {
+                try FileManager.default.copyItem(atPath: originalPath, toPath: tmpPath)
+            } catch {
+                SBLog.app.error("Screenshot copy failed: \(error.localizedDescription)")
+                ToastWindow.instance.showToast("Copy failed: \(error.localizedDescription)")
+                return
+            }
 
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(tmpPath, forType: .string)

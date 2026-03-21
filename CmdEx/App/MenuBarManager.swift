@@ -5,7 +5,7 @@ import SwiftUI
 
 @MainActor
 final class MenuBarManager: NSObject {
-    private var statusItem: NSStatusItem!
+    private var statusItem: NSStatusItem?
     private let store: StoreOf<AppFeature>
     private let converterController = TimeConverterWindowController()
     private let popover = PopoverManager()
@@ -18,7 +18,7 @@ final class MenuBarManager: NSObject {
 
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        if let button = statusItem.button {
+        if let button = statusItem?.button {
             button.image = NSImage(systemSymbolName: "command", accessibilityDescription: "CmdEx")
             button.target = self
             button.action = #selector(statusItemClicked(_:))
@@ -33,7 +33,7 @@ final class MenuBarManager: NSObject {
     // MARK: - Popover
 
     private func showPopover() {
-        guard let button = statusItem.button else { return }
+        guard let button = statusItem?.button else { return }
         if popover.isShown { popover.close(); return }
 
         let shortcutsState = store.state.shortcuts
@@ -125,7 +125,7 @@ final class MenuBarManager: NSObject {
     }
 
     private func flashIcon() {
-        guard let button = statusItem.button else { return }
+        guard let button = statusItem?.button else { return }
         let original = button.image
         button.image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: "Done")
         Task { @MainActor in

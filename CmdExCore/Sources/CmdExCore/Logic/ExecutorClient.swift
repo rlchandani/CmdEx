@@ -128,12 +128,16 @@ extension ExecutorClient: DependencyKey {
             process.standardError = pipe
             do {
                 try process.run()
-                process.waitUntilExit()
-                if process.terminationStatus == 0 {
+                let status = await withCheckedContinuation { continuation in
+                    process.terminationHandler = { p in
+                        continuation.resume(returning: p.terminationStatus)
+                    }
+                }
+                if status == 0 {
                     return .success(title: "✓ Command completed")
                 }
                 let stderr = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-                logger.error("Shell failed (\(process.terminationStatus)): \(stderr)")
+                logger.error("Shell failed (\(status)): \(stderr)")
                 return .failure(title: "✗ Command failed", detail: stderr)
             } catch {
                 logger.error("Shell error: \(error.localizedDescription)")

@@ -109,12 +109,12 @@ final class TimeConverterWindowController: NSObject, NSTextFieldDelegate {
 
         let fmt = DateFormatter()
         fmt.dateFormat = "h:mm a"
-        let utcDay = Calendar.current.dateComponents(in: .gmt, from: date).day!
+        let utcDay = Calendar.current.dateComponents(in: .gmt, from: date).day ?? 0
         for (i, tz) in zones.enumerated() {
             fmt.timeZone = tz
             let comps = Calendar.current.dateComponents(in: tz, from: date)
             let hour = comps.hour ?? 0
-            let tzDay = comps.day!
+            let tzDay = comps.day ?? 0
             let dayDiff = tzDay - utcDay
             let abbr = (tz.abbreviation(for: date) ?? tz.identifier).padding(toLength: 5, withPad: " ", startingAt: 0)
             let indicator: String = switch hour {

@@ -33,6 +33,7 @@ targets:
         MACOSX_DEPLOYMENT_TARGET: "15.0"
         GENERATE_INFOPLIST_FILE: false
         SWIFT_STRICT_CONCURRENCY: complete
+        ENABLE_HARDENED_RUNTIME: YES
         CODE_SIGN_STYLE: Automatic
     dependencies:
       - package: CmdExCore

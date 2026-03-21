@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         return Store(initialState: AppFeature.State()) { AppFeature() }
     }()
 
-    private var menuBarManager: MenuBarManager!
+    private var menuBarManager: MenuBarManager?
     private var dashboardWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {

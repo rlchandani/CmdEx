@@ -29,6 +29,7 @@ public struct ScreenshotClient: Sendable {
 
 extension ScreenshotClient: DependencyKey {
     /// Live value must be registered by the app target via ``registerLive()``.
+    // SAFETY: Written once in AppDelegate static initializer before store creation, read-only thereafter.
     public nonisolated(unsafe) static var liveValue = ScreenshotClient()
     public static let testValue = ScreenshotClient()
 }

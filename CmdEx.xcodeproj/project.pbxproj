@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		017192607A9EB2874C112242 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 91037377070ECA22AA9B9D99 /* PrivacyInfo.xcprivacy */; };
 		1454367D76E881F31F2B41FB /* CmdExCore in Frameworks */ = {isa = PBXBuildFile; productRef = EF52998099CEAF12624B821A /* CmdExCore */; };
 		1A45908A5C8685AE2814167C /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851E318F8FFF2276CBF6B6D5 /* MainWindowView.swift */; };
 		2928EFDBB9CCA3FD8C88901E /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8D4C0FD0BF6826CC0FD761 /* ModelTests.swift */; };
@@ -60,6 +61,7 @@
 		8545FDBE1E03CC0BBD6AE24D /* PopoverManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverManager.swift; sourceTree = "<group>"; };
 		881E743B7620D4C5B3EA7E73 /* DiagnosticsLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsLogging.swift; sourceTree = "<group>"; };
 		8FA024456D4E217F5EFD060C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		91037377070ECA22AA9B9D99 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		9D72327F03FEF2E442B81798 /* ToastWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastWindow.swift; sourceTree = "<group>"; };
 		AFCB6040B6F23C341669AF39 /* ScreenshotWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotWatcher.swift; sourceTree = "<group>"; };
 		C1086C11E5BA53E4A1F72E7A /* CmdExTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CmdExTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 			children = (
 				DE601CFA382B73393C1FFD05 /* CmdEx.entitlements */,
 				8FA024456D4E217F5EFD060C /* Info.plist */,
+				91037377070ECA22AA9B9D99 /* PrivacyInfo.xcprivacy */,
 				B5736B15E0549C38D31DD123 /* App */,
 				EDDB1AFA827E662A70F61197 /* Features */,
 			);
@@ -209,6 +212,7 @@
 			buildPhases = (
 				8925862BBA968D077969E0BB /* SwiftLint */,
 				3808266A1EEF464DA9F3A510 /* Sources */,
+				93C589E234E12198B3CDBA78 /* Resources */,
 				A5D1045AC0D92D25D8A48295 /* Frameworks */,
 			);
 			buildRules = (
@@ -289,6 +293,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4E05576D29D655A33EB6AC9 /* sample_store.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93C589E234E12198B3CDBA78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				017192607A9EB2874C112242 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +519,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CmdEx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -548,6 +561,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CmdEx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

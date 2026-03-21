@@ -24,6 +24,7 @@ public struct ToastClient: Sendable {
 }
 
 extension ToastClient: DependencyKey {
+    // SAFETY: Written once in AppDelegate static initializer before store creation, read-only thereafter.
     public nonisolated(unsafe) static var liveValue = ToastClient()
     public static let testValue = ToastClient()
 }
