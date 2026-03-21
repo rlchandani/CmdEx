@@ -1,0 +1,13 @@
+import SwiftUI
+import ComposableArchitecture
+import ShortcutBarCore
+
+@main
+struct CmdExApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    var body: some Scene {
+        // No visible window — menu bar only. Suppress default window.
+        WindowGroup { }.defaultLaunchBehavior(.suppressed)
+    }
+}

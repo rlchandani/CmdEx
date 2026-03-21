@@ -1,0 +1,14 @@
+{
+  "shortcuts": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "title": "Test Chrome",
+      "command": "Google Chrome",
+      "commandType": "app",
+      "isEnabled": true,
+      "sortOrder": 0
+    }
+  ],
+  "groups": [],
+  "lastUsedValues": {}
+}

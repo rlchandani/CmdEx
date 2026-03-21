@@ -1,0 +1,610 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A0224E7FCC059AE25C1D1A7 /* ShortcutBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D678CBA397C1F04B0236376 /* ShortcutBarApp.swift */; };
+		10DCCDA05451844C4A3B28EB /* DataManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8858BCFA2C29155CF91C980B /* DataManagementView.swift */; };
+		118D1432CB9157669F49B329 /* ShortcutBarCore in Frameworks */ = {isa = PBXBuildFile; productRef = 210A028E559346110C11026D /* ShortcutBarCore */; };
+		1C112A4FED3FDB9004ED90EC /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684A382577BED27339EEE649 /* AboutView.swift */; };
+		21B5155609D6657BB2115942 /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87AFB57C80BFAA6D90A162D /* HoverButton.swift */; };
+		23EDE6DD132F024EDFD037B3 /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB0D1C4610A3B8B67B56FA0 /* MainWindowView.swift */; };
+		2463F7DA4F33221C3A29CBF1 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06733D454DCF49AED293AD40 /* AppFeature.swift */; };
+		24A577F3B4B43A0F182F596A /* DiagnosticsLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E17760AC323EC54AA7A22 /* DiagnosticsLogging.swift */; };
+		2518ABADF3AE28169143B085 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC64FF5673050F3E5459D161 /* DashboardView.swift */; };
+		465FF9968464479A4AF06FAD /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7480C58E6B340C3893DDD74 /* PreferencesView.swift */; };
+		5FC21FEFA4BA3B3149AA44B7 /* PopoverManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD7A3F72B450F7F0975A9F0 /* PopoverManager.swift */; };
+		68E9DD3EDCC4DDF07715F750 /* MenuPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E93AF47694EF038B0E7E04 /* MenuPopoverView.swift */; };
+		788BA009D45DAA08181AD364 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F288497D7EE6452093B58D /* ModelTests.swift */; };
+		8039A4C384E5E968AE3F9E6B /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D2B30DBB56F67E46FC62F8 /* AppFeatureTests.swift */; };
+		8CF726742E0357C28C004000 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873326336958FACCFCAE9C79 /* MenuBarManager.swift */; };
+		9F8C4521A08DAB951CA2245B /* ShortcutBarCore in Frameworks */ = {isa = PBXBuildFile; productRef = A755501136041C54E1A1CA7B /* ShortcutBarCore */; };
+		A086B7ABEF918463730526D7 /* ScreenshotWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E494D51D2BD0EF3E9BA5415F /* ScreenshotWatcher.swift */; };
+		B8A72ACC9EF37E10435BD16A /* TimeZoneSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A47A410D7E39D03228A23DA /* TimeZoneSettingsView.swift */; };
+		C1DA27C997B810453748A55F /* sample_store.json in Resources */ = {isa = PBXBuildFile; fileRef = C51732110E2E55CA0841C7B4 /* sample_store.json */; };
+		D3295DDA809E43332B2B3A29 /* TimeConverterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6648F702CF0F57EC9CE47C22 /* TimeConverterPanel.swift */; };
+		D85991DB88F331E40060455B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4650C2AB02A9EC27E2BBD57 /* AppDelegate.swift */; };
+		DA1F35EF33C9BFC90AA75482 /* ShortcutsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B769300425E2D77A6CDB15 /* ShortcutsFeature.swift */; };
+		E4751F932ACF99111E9B5ED2 /* ToastWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0EB0365BAD40EC9AB9D3D5 /* ToastWindow.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF3383A36EF3F3E8B9842C59 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7DB879FB752555F8862B9AE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D67D125B5B4E7AB3542A60F6;
+			remoteInfo = ShortcutBar;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02E93AF47694EF038B0E7E04 /* MenuPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPopoverView.swift; sourceTree = "<group>"; };
+		06733D454DCF49AED293AD40 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		0D678CBA397C1F04B0236376 /* ShortcutBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutBarApp.swift; sourceTree = "<group>"; };
+		0DB0D1C4610A3B8B67B56FA0 /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
+		4179EB5BE687E713C07BF571 /* ShortcutBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShortcutBar.entitlements; sourceTree = "<group>"; };
+		502E17760AC323EC54AA7A22 /* DiagnosticsLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsLogging.swift; sourceTree = "<group>"; };
+		5A47A410D7E39D03228A23DA /* TimeZoneSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneSettingsView.swift; sourceTree = "<group>"; };
+		6648F702CF0F57EC9CE47C22 /* TimeConverterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConverterPanel.swift; sourceTree = "<group>"; };
+		66D2B30DBB56F67E46FC62F8 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
+		684A382577BED27339EEE649 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		6F0EB0365BAD40EC9AB9D3D5 /* ToastWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastWindow.swift; sourceTree = "<group>"; };
+		77F288497D7EE6452093B58D /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		873326336958FACCFCAE9C79 /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		8858BCFA2C29155CF91C980B /* DataManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagementView.swift; sourceTree = "<group>"; };
+		9FD7A3F72B450F7F0975A9F0 /* PopoverManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverManager.swift; sourceTree = "<group>"; };
+		B4650C2AB02A9EC27E2BBD57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B6B769300425E2D77A6CDB15 /* ShortcutsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsFeature.swift; sourceTree = "<group>"; };
+		B7480C58E6B340C3893DDD74 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		C51732110E2E55CA0841C7B4 /* sample_store.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sample_store.json; sourceTree = "<group>"; };
+		C7CA9AD0938882F62E3F6B24 /* ShortcutBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShortcutBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C87AFB57C80BFAA6D90A162D /* HoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverButton.swift; sourceTree = "<group>"; };
+		CC64FF5673050F3E5459D161 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		E1FE9CE7C8E418D6DD10649D /* ShortcutBarCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ShortcutBarCore; path = ShortcutBarCore; sourceTree = SOURCE_ROOT; };
+		E35ED7D68E337D88D8787C72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E494D51D2BD0EF3E9BA5415F /* ScreenshotWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotWatcher.swift; sourceTree = "<group>"; };
+		E70D59C1FB00B91EF0DE1E1C /* ShortcutBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShortcutBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		07BC74E2088993705E594AB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				118D1432CB9157669F49B329 /* ShortcutBarCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77BCB85EE8E0D502AED4325 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F8C4521A08DAB951CA2245B /* ShortcutBarCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0DC2E81B8BB70FD93CC8B60A = {
+			isa = PBXGroup;
+			children = (
+				1255D39EB44FBF19162ED7DE /* Packages */,
+				22BCF3CC8A86EB1BB3C26A83 /* ShortcutBar */,
+				601632BD92E81DD1E051705F /* ShortcutBarCore */,
+				E78CFC8B815AEF2F02F30C33 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1255D39EB44FBF19162ED7DE /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E1FE9CE7C8E418D6DD10649D /* ShortcutBarCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		22BCF3CC8A86EB1BB3C26A83 /* ShortcutBar */ = {
+			isa = PBXGroup;
+			children = (
+				E35ED7D68E337D88D8787C72 /* Info.plist */,
+				4179EB5BE687E713C07BF571 /* ShortcutBar.entitlements */,
+				35864624A6C0AB7B80898EE7 /* App */,
+				D4942E196C33FD136A3608FB /* Features */,
+			);
+			path = ShortcutBar;
+			sourceTree = "<group>";
+		};
+		35864624A6C0AB7B80898EE7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B4650C2AB02A9EC27E2BBD57 /* AppDelegate.swift */,
+				502E17760AC323EC54AA7A22 /* DiagnosticsLogging.swift */,
+				C87AFB57C80BFAA6D90A162D /* HoverButton.swift */,
+				873326336958FACCFCAE9C79 /* MenuBarManager.swift */,
+				02E93AF47694EF038B0E7E04 /* MenuPopoverView.swift */,
+				9FD7A3F72B450F7F0975A9F0 /* PopoverManager.swift */,
+				E494D51D2BD0EF3E9BA5415F /* ScreenshotWatcher.swift */,
+				0D678CBA397C1F04B0236376 /* ShortcutBarApp.swift */,
+				6F0EB0365BAD40EC9AB9D3D5 /* ToastWindow.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		601632BD92E81DD1E051705F /* ShortcutBarCore */ = {
+			isa = PBXGroup;
+			children = (
+				E860179E84128D475CD6E98E /* Tests */,
+			);
+			path = ShortcutBarCore;
+			sourceTree = "<group>";
+		};
+		C0DDF8D5F208B92FB046BB5C /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				C51732110E2E55CA0841C7B4 /* sample_store.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		D4942E196C33FD136A3608FB /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				684A382577BED27339EEE649 /* AboutView.swift */,
+				06733D454DCF49AED293AD40 /* AppFeature.swift */,
+				CC64FF5673050F3E5459D161 /* DashboardView.swift */,
+				8858BCFA2C29155CF91C980B /* DataManagementView.swift */,
+				0DB0D1C4610A3B8B67B56FA0 /* MainWindowView.swift */,
+				B7480C58E6B340C3893DDD74 /* PreferencesView.swift */,
+				B6B769300425E2D77A6CDB15 /* ShortcutsFeature.swift */,
+				6648F702CF0F57EC9CE47C22 /* TimeConverterPanel.swift */,
+				5A47A410D7E39D03228A23DA /* TimeZoneSettingsView.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		D65B9CA23407DB07A5FE9D4C /* ShortcutBarCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				66D2B30DBB56F67E46FC62F8 /* AppFeatureTests.swift */,
+				77F288497D7EE6452093B58D /* ModelTests.swift */,
+				C0DDF8D5F208B92FB046BB5C /* Fixtures */,
+			);
+			path = ShortcutBarCoreTests;
+			sourceTree = "<group>";
+		};
+		E78CFC8B815AEF2F02F30C33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E70D59C1FB00B91EF0DE1E1C /* ShortcutBar.app */,
+				C7CA9AD0938882F62E3F6B24 /* ShortcutBarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E860179E84128D475CD6E98E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D65B9CA23407DB07A5FE9D4C /* ShortcutBarCoreTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		83C6265A353EF95467553B0D /* ShortcutBarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F5011D78E27035A2ECA5ADC /* Build configuration list for PBXNativeTarget "ShortcutBarTests" */;
+			buildPhases = (
+				AF6505AF096FEA59A67A11BA /* Sources */,
+				A555AC1D32918C8ACD11E952 /* Resources */,
+				A77BCB85EE8E0D502AED4325 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D69EC971AFF2C9B5B5F620A /* PBXTargetDependency */,
+			);
+			name = ShortcutBarTests;
+			packageProductDependencies = (
+				A755501136041C54E1A1CA7B /* ShortcutBarCore */,
+			);
+			productName = ShortcutBarTests;
+			productReference = C7CA9AD0938882F62E3F6B24 /* ShortcutBarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D67D125B5B4E7AB3542A60F6 /* ShortcutBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C20928ACBA8BCF35532DBD58 /* Build configuration list for PBXNativeTarget "ShortcutBar" */;
+			buildPhases = (
+				4441D79A47F4D31775427EBC /* SwiftLint */,
+				7DB028738203A01A2A8B8B85 /* Sources */,
+				07BC74E2088993705E594AB4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShortcutBar;
+			packageProductDependencies = (
+				210A028E559346110C11026D /* ShortcutBarCore */,
+			);
+			productName = ShortcutBar;
+			productReference = E70D59C1FB00B91EF0DE1E1C /* ShortcutBar.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7DB879FB752555F8862B9AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					D67D125B5B4E7AB3542A60F6 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = CB53690ADBEF3C86F13CBB2E /* Build configuration list for PBXProject "ShortcutBar" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0DC2E81B8BB70FD93CC8B60A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				020F1B9912340F753493FFFE /* XCLocalSwiftPackageReference "ShortcutBarCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E78CFC8B815AEF2F02F30C33 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D67D125B5B4E7AB3542A60F6 /* ShortcutBar */,
+				83C6265A353EF95467553B0D /* ShortcutBarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A555AC1D32918C8ACD11E952 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1DA27C997B810453748A55F /* sample_store.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4441D79A47F4D31775427EBC /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if command -v swiftlint >/dev/null 2>&1; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7DB028738203A01A2A8B8B85 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C112A4FED3FDB9004ED90EC /* AboutView.swift in Sources */,
+				D85991DB88F331E40060455B /* AppDelegate.swift in Sources */,
+				2463F7DA4F33221C3A29CBF1 /* AppFeature.swift in Sources */,
+				2518ABADF3AE28169143B085 /* DashboardView.swift in Sources */,
+				10DCCDA05451844C4A3B28EB /* DataManagementView.swift in Sources */,
+				24A577F3B4B43A0F182F596A /* DiagnosticsLogging.swift in Sources */,
+				21B5155609D6657BB2115942 /* HoverButton.swift in Sources */,
+				23EDE6DD132F024EDFD037B3 /* MainWindowView.swift in Sources */,
+				8CF726742E0357C28C004000 /* MenuBarManager.swift in Sources */,
+				68E9DD3EDCC4DDF07715F750 /* MenuPopoverView.swift in Sources */,
+				5FC21FEFA4BA3B3149AA44B7 /* PopoverManager.swift in Sources */,
+				465FF9968464479A4AF06FAD /* PreferencesView.swift in Sources */,
+				A086B7ABEF918463730526D7 /* ScreenshotWatcher.swift in Sources */,
+				0A0224E7FCC059AE25C1D1A7 /* ShortcutBarApp.swift in Sources */,
+				DA1F35EF33C9BFC90AA75482 /* ShortcutsFeature.swift in Sources */,
+				D3295DDA809E43332B2B3A29 /* TimeConverterPanel.swift in Sources */,
+				B8A72ACC9EF37E10435BD16A /* TimeZoneSettingsView.swift in Sources */,
+				E4751F932ACF99111E9B5ED2 /* ToastWindow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF6505AF096FEA59A67A11BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8039A4C384E5E968AE3F9E6B /* AppFeatureTests.swift in Sources */,
+				788BA009D45DAA08181AD364 /* ModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D69EC971AFF2C9B5B5F620A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D67D125B5B4E7AB3542A60F6 /* ShortcutBar */;
+			targetProxy = EF3383A36EF3F3E8B9842C59 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0ACAC01CA35700A8996A1821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ShortcutBar/ShortcutBar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShortcutBar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmdex.app;
+				PRODUCT_NAME = ShortcutBar;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		5B751510E3A468D4B8069EE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmdex.ShortcutBarTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShortcutBar.app/Contents/MacOS/ShortcutBar";
+			};
+			name = Release;
+		};
+		67D321B1C8702212DACAD815 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmdex.ShortcutBarTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShortcutBar.app/Contents/MacOS/ShortcutBar";
+			};
+			name = Debug;
+		};
+		A3EB3F60F3A75DEEFF3304D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ShortcutBar/ShortcutBar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShortcutBar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cmdex.app;
+				PRODUCT_NAME = ShortcutBar;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		B0EA172CE139A0A5525576D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B789DEC23144BEA86DFB5A90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3F5011D78E27035A2ECA5ADC /* Build configuration list for PBXNativeTarget "ShortcutBarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67D321B1C8702212DACAD815 /* Debug */,
+				5B751510E3A468D4B8069EE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C20928ACBA8BCF35532DBD58 /* Build configuration list for PBXNativeTarget "ShortcutBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3EB3F60F3A75DEEFF3304D8 /* Debug */,
+				0ACAC01CA35700A8996A1821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CB53690ADBEF3C86F13CBB2E /* Build configuration list for PBXProject "ShortcutBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0EA172CE139A0A5525576D0 /* Debug */,
+				B789DEC23144BEA86DFB5A90 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		020F1B9912340F753493FFFE /* XCLocalSwiftPackageReference "ShortcutBarCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ShortcutBarCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		210A028E559346110C11026D /* ShortcutBarCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ShortcutBarCore;
+		};
+		A755501136041C54E1A1CA7B /* ShortcutBarCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ShortcutBarCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D7DB879FB752555F8862B9AE /* Project object */;
+}
