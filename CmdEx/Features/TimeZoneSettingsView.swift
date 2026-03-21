@@ -3,17 +3,16 @@ import CmdExCore
 import SwiftUI
 
 struct TimeZoneSettingsView: View {
-    @State private var settings = AppSettings()
+    @Shared(.appSettings) var settings
+
     @State private var showingAddSheet = false
 
-    private func load() {
-        @Shared(.appSettings) var shared
-        settings = shared
+    private func removeZone(at index: Int) {
+        $settings.withLock { $0.timeZoneIdentifiers.remove(at: index) }
     }
 
-    private func save() {
-        @Shared(.appSettings) var shared
-        $shared.withLock { $0 = settings }
+    private func addZone(_ id: String) {
+        $settings.withLock { $0.timeZoneIdentifiers.append(id) }
     }
 
     var body: some View {
@@ -21,11 +20,11 @@ struct TimeZoneSettingsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Text("Time Zones").font(.title2.bold())
 
-                settingsCard {
+                SettingsComponents.card {
                     VStack(spacing: 0) {
                         ForEach(Array(settings.timeZoneIdentifiers.enumerated()), id: \.offset) { index, id in
                             if index > 0 { Divider().padding(.horizontal, 12) }
-                            settingsRow {
+                            SettingsComponents.row {
                                 HStack {
                                     let tz = TimeZone(identifier: id)
                                     Text(workingHoursIndicator(for: tz))
@@ -36,8 +35,7 @@ struct TimeZoneSettingsView: View {
                                     Spacer()
                                     if settings.timeZoneIdentifiers.count > 1 {
                                         Button {
-                                            settings.timeZoneIdentifiers.remove(at: index)
-                                            save()
+                                            removeZone(at: index)
                                         } label: {
                                             Image(systemName: "minus.circle.fill").foregroundStyle(.red)
                                         }
@@ -49,7 +47,7 @@ struct TimeZoneSettingsView: View {
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             Button { showingAddSheet = true } label: {
                                 HStack {
                                     Image(systemName: "plus.circle.fill").foregroundStyle(.green)
@@ -61,8 +59,8 @@ struct TimeZoneSettingsView: View {
                     }
                 }
 
-                settingsCard {
-                    settingsRow {
+                SettingsComponents.card {
+                    SettingsComponents.row {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("Indicators").font(.subheadline.bold())
                             HStack(spacing: 16) {
@@ -80,11 +78,9 @@ struct TimeZoneSettingsView: View {
             .padding(24)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .onAppear { load() }
         .sheet(isPresented: $showingAddSheet) {
             TimeZonePickerSheet(onAdd: { id in
-                settings.timeZoneIdentifiers.append(id)
-                save()
+                addZone(id)
             })
         }
     }

@@ -13,14 +13,7 @@ final class ScreenshotWatcher {
 
     var enabled: Bool {
         get {
-            // Read directly from the settings file to avoid @Shared timing issues at launch
-            let url = URL.applicationSupportDirectory
-                .appending(component: "com.cmdex.app")
-                .appending(component: "settings.json")
-            guard let data = try? Data(contentsOf: url),
-                  let settings = try? JSONDecoder().decode(AppSettings.self, from: data) else {
-                return false
-            }
+            @Shared(.appSettings) var settings
             return settings.screenshotWatcherEnabled
         }
         set {

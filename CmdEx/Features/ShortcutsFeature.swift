@@ -156,8 +156,14 @@ struct ShortcutsFeature {
                     await send(.executionCompleted(result))
                 }
 
-            case .executionCompleted:
-                return .none
+            case let .executionCompleted(result):
+                switch result {
+                case let .success(title):
+                    return .run { [toast] _ in await toast.show(title) }
+                case let .failure(title, detail):
+                    let msg = detail.isEmpty ? title : "\(title): \(detail)"
+                    return .run { [toast] _ in await toast.show(msg) }
+                }
 
             // MARK: - Placeholder
 

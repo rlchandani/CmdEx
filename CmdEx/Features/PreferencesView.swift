@@ -22,9 +22,9 @@ struct GeneralSettingsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Text("General").font(.title2.bold())
 
-                settingsCard {
+                SettingsComponents.card {
                     VStack(spacing: 0) {
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "power")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -37,7 +37,7 @@ struct GeneralSettingsView: View {
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "camera.viewfinder")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -81,7 +81,7 @@ struct DefaultAppsSettingsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Text("Default Applications").font(.title2.bold())
 
-                settingsCard {
+                SettingsComponents.card {
                     VStack(spacing: 0) {
                         appPickerRow(
                             icon: "terminal", label: "Terminal",
@@ -119,7 +119,7 @@ struct DefaultAppsSettingsView: View {
         options: [(String, String)],
         allowSystemDefault: Bool
     ) -> some View {
-        settingsRow {
+        SettingsComponents.row {
             HStack {
                 Image(systemName: icon).foregroundStyle(.secondary).frame(width: 20)
                 Text(label)
@@ -163,7 +163,7 @@ struct DefaultAppsSettingsView: View {
             "dev.warp.Warp-Stable", "io.alacritty",
             "com.github.wez.wezterm", "net.kovidgoyal.kitty", "co.zeit.hyper",
         ])
-        browsers = discoverApps(toOpen: URL(string: "https://example.com")!)
+        browsers = discoverApps(toOpen: SBURLs.browserDiscovery)
         editors = discoverApps(toOpen: URL(fileURLWithPath: "/tmp/dummy.txt"))
     }
 
@@ -194,13 +194,15 @@ struct DefaultAppsSettingsView: View {
 
 // MARK: - Shared Components
 
-func settingsCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-    content()
-        .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary.opacity(0.5)))
-}
+enum SettingsComponents {
+    static func card<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        content()
+            .background(RoundedRectangle(cornerRadius: 10).fill(.quaternary.opacity(0.5)))
+    }
 
-func settingsRow<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-    content()
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
+    static func row<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        content()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+    }
 }

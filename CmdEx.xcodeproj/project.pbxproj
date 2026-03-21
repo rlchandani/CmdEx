@@ -23,6 +23,7 @@
 		A5892D5AC13A6A035333C674 /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9083BB2FD9DFF161D59916 /* AppFeatureTests.swift */; };
 		A9DE354BAA2D8E0B265F9A3B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BD6D372A216CC76BA1B459 /* AboutView.swift */; };
 		ADA2541ECC630E9A2E85A121 /* ShortcutsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F05798DBA6EC87C75FE4E71 /* ShortcutsFeature.swift */; };
+		B1F2D97EBCB9CD496211416E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A538DB2E38745C414CD0B963 /* Localizable.xcstrings */; };
 		B3B9E7B59F8BF8A2FA9937FC /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 2ABE3B7F934C00EC94CC516F /* Sparkle */; };
 		BDFC80EF465C50931BA846DF /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA87D9BA2C7B8A0062EB1A74 /* DashboardView.swift */; };
 		BE139369FAC24AD14C3C3732 /* TimeZoneSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72982D530D4CD3A52D087A5 /* TimeZoneSettingsView.swift */; };
@@ -31,6 +32,8 @@
 		D4E05576D29D655A33EB6AC9 /* sample_store.json in Resources */ = {isa = PBXBuildFile; fileRef = C41CB2E6A072E2A9B5A08A85 /* sample_store.json */; };
 		DBFF9E60B85281A18216125C /* CmdExCore in Frameworks */ = {isa = PBXBuildFile; productRef = 280B93480D16AA916A8EC2C7 /* CmdExCore */; };
 		E5CA2B01606B60853CE072E4 /* PopoverManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8545FDBE1E03CC0BBD6AE24D /* PopoverManager.swift */; };
+		E748E31E3119E81BBA80C7C3 /* ShortcutEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C98B3EDF542B6B66C113CBB /* ShortcutEditSheet.swift */; };
+		E9729A4FCB15346978C8305F /* GroupEditSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97350158FD5BC5596C84B12E /* GroupEditSheet.swift */; };
 		F8C47102415970B981A98E3B /* MenuPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3176490E9B8B4C3DC7D1383 /* MenuPopoverView.swift */; };
 		FB78E55666963033041C0F42 /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12E73A4EE6917CB087C9327 /* HoverButton.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +56,7 @@
 		1B3108C3F2315289E7DC1D73 /* TimeConverterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConverterPanel.swift; sourceTree = "<group>"; };
 		2F05798DBA6EC87C75FE4E71 /* ShortcutsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsFeature.swift; sourceTree = "<group>"; };
 		3B8D4C0FD0BF6826CC0FD761 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		5C98B3EDF542B6B66C113CBB /* ShortcutEditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutEditSheet.swift; sourceTree = "<group>"; };
 		6950EB4B4761D45998075753 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		72FB6D9186F673AC4F570F04 /* ShortcutsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsFeatureTests.swift; sourceTree = "<group>"; };
 		7CB310B93641E12B6C69F5A4 /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
@@ -62,7 +66,9 @@
 		881E743B7620D4C5B3EA7E73 /* DiagnosticsLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsLogging.swift; sourceTree = "<group>"; };
 		8FA024456D4E217F5EFD060C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		91037377070ECA22AA9B9D99 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		97350158FD5BC5596C84B12E /* GroupEditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEditSheet.swift; sourceTree = "<group>"; };
 		9D72327F03FEF2E442B81798 /* ToastWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastWindow.swift; sourceTree = "<group>"; };
+		A538DB2E38745C414CD0B963 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		AFCB6040B6F23C341669AF39 /* ScreenshotWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotWatcher.swift; sourceTree = "<group>"; };
 		C1086C11E5BA53E4A1F72E7A /* CmdExTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CmdExTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3176490E9B8B4C3DC7D1383 /* MenuPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPopoverView.swift; sourceTree = "<group>"; };
@@ -102,6 +108,7 @@
 			children = (
 				DE601CFA382B73393C1FFD05 /* CmdEx.entitlements */,
 				8FA024456D4E217F5EFD060C /* Info.plist */,
+				A538DB2E38745C414CD0B963 /* Localizable.xcstrings */,
 				91037377070ECA22AA9B9D99 /* PrivacyInfo.xcprivacy */,
 				B5736B15E0549C38D31DD123 /* App */,
 				EDDB1AFA827E662A70F61197 /* Features */,
@@ -184,8 +191,10 @@
 				09A206E3DF4599CB75398FE4 /* AppFeature.swift */,
 				EA87D9BA2C7B8A0062EB1A74 /* DashboardView.swift */,
 				D1B47D9CBEE929F095930A13 /* DataManagementView.swift */,
+				97350158FD5BC5596C84B12E /* GroupEditSheet.swift */,
 				851E318F8FFF2276CBF6B6D5 /* MainWindowView.swift */,
 				6950EB4B4761D45998075753 /* PreferencesView.swift */,
+				5C98B3EDF542B6B66C113CBB /* ShortcutEditSheet.swift */,
 				2F05798DBA6EC87C75FE4E71 /* ShortcutsFeature.swift */,
 				1B3108C3F2315289E7DC1D73 /* TimeConverterPanel.swift */,
 				F72982D530D4CD3A52D087A5 /* TimeZoneSettingsView.swift */,
@@ -300,6 +309,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1F2D97EBCB9CD496211416E /* Localizable.xcstrings in Resources */,
 				017192607A9EB2874C112242 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +350,7 @@
 				BDFC80EF465C50931BA846DF /* DashboardView.swift in Sources */,
 				4DBE0AFD3BF7BCD7544BA7FF /* DataManagementView.swift in Sources */,
 				3464DB3621752B8498E4BEA9 /* DiagnosticsLogging.swift in Sources */,
+				E9729A4FCB15346978C8305F /* GroupEditSheet.swift in Sources */,
 				FB78E55666963033041C0F42 /* HoverButton.swift in Sources */,
 				1A45908A5C8685AE2814167C /* MainWindowView.swift in Sources */,
 				3C0260EA3F0783869BB1E8A4 /* MenuBarManager.swift in Sources */,
@@ -347,6 +358,7 @@
 				E5CA2B01606B60853CE072E4 /* PopoverManager.swift in Sources */,
 				6DC21674CD454E10307806AE /* PreferencesView.swift in Sources */,
 				8E16666374A39B2E4AD72BF5 /* ScreenshotWatcher.swift in Sources */,
+				E748E31E3119E81BBA80C7C3 /* ShortcutEditSheet.swift in Sources */,
 				ADA2541ECC630E9A2E85A121 /* ShortcutsFeature.swift in Sources */,
 				57F63096CE69E10C5433E57E /* TimeConverterPanel.swift in Sources */,
 				BE139369FAC24AD14C3C3732 /* TimeZoneSettingsView.swift in Sources */,
@@ -622,8 +634,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.0;
+				kind = exactVersion;
+				version = 2.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

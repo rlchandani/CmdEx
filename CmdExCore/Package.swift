@@ -16,7 +16,10 @@ let package = Package(
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
-            path: "Sources/CmdExCore"
+            path: "Sources/CmdExCore",
+            resources: [
+                .copy("PrivacyInfo.xcprivacy"),
+            ]
         ),
         .testTarget(
             name: "CmdExCoreTests",

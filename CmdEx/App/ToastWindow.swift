@@ -9,7 +9,8 @@ class InvisibleWindow: NSPanel {
     override var canBecomeMain: Bool { false }
 
     private var currentScreen: NSScreen?
-    // SAFETY: Only accessed in deinit to remove the monitor. deinit is single-threaded per instance.
+    // SAFETY: NSPanel is main-actor-bound; init and deinit both run on the main actor,
+    // so this property is only ever read/written from a single isolation domain.
     private nonisolated(unsafe) var mouseMonitor: Any?
 
     init() {

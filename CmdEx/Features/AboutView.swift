@@ -1,3 +1,4 @@
+import CmdExCore
 import Sparkle
 import SwiftUI
 
@@ -10,9 +11,9 @@ struct AboutView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Text("About").font(.title2.bold())
 
-                settingsCard {
+                SettingsComponents.card {
                     VStack(spacing: 0) {
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "info.circle")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -25,7 +26,7 @@ struct AboutView: View {
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "arrow.triangle.2.circlepath")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -40,7 +41,7 @@ struct AboutView: View {
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "doc.text")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -53,26 +54,26 @@ struct AboutView: View {
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "curlybraces.square")
                                     .foregroundStyle(.secondary).frame(width: 20)
                                 Text("CmdEx is open source")
                                 Spacer()
-                                Link("Visit GitHub", destination: URL(string: "https://github.com/rlchandani/CmdEx")!)
+                                Link("Visit GitHub", destination: SBURLs.github)
                                     .font(.callout)
                             }
                         }
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "person.circle")
                                     .foregroundStyle(.secondary).frame(width: 20)
                                 Text("Created by")
                                 Spacer()
-                                Link("Rohit Chandani", destination: URL(string: "https://rlchandani.dev/")!)
+                                Link("Rohit Chandani", destination: SBURLs.author)
                                     .font(.callout)
                             }
                         }

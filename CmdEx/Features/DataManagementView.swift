@@ -13,9 +13,9 @@ struct DataManagementView: View {
                 Text("Data Management").font(.title2.bold())
 
                 // Export
-                settingsCard {
+                SettingsComponents.card {
                     VStack(spacing: 0) {
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "square.and.arrow.up")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -32,7 +32,7 @@ struct DataManagementView: View {
 
                         Divider().padding(.horizontal, 12)
 
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "doc.on.clipboard")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -50,9 +50,9 @@ struct DataManagementView: View {
                 }
 
                 // Import
-                settingsCard {
+                SettingsComponents.card {
                     VStack(spacing: 0) {
-                        settingsRow {
+                        SettingsComponents.row {
                             HStack {
                                 Image(systemName: "square.and.arrow.down")
                                     .foregroundStyle(.secondary).frame(width: 20)
@@ -68,7 +68,7 @@ struct DataManagementView: View {
                         }
 
                         if let importResult {
-                            settingsRow {
+                            SettingsComponents.row {
                                 HStack {
                                     Image(systemName: importResult.hasPrefix("✓") ? "checkmark.circle.fill" : "xmark.circle.fill")
                                         .foregroundStyle(importResult.hasPrefix("✓") ? .green : .red)
@@ -82,8 +82,8 @@ struct DataManagementView: View {
                 }
 
                 // Info
-                settingsCard {
-                    settingsRow {
+                SettingsComponents.card {
+                    SettingsComponents.row {
                         HStack {
                             Image(systemName: "info.circle")
                                 .foregroundStyle(.secondary).frame(width: 20)

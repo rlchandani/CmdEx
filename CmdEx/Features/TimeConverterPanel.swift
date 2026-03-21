@@ -1,6 +1,9 @@
 import AppKit
 import SwiftUI
 
+// NOTE: This panel uses AppKit directly (NSTextField, NSView, manual frames) rather than
+// SwiftUI because it needs precise control over the floating panel lifecycle and text field
+// focus behavior that SwiftUI's window management doesn't easily support.
 @MainActor
 final class TimeConverterWindowController: NSObject, NSTextFieldDelegate {
     private var panel: NSPanel?

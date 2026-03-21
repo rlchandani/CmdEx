@@ -3,6 +3,10 @@ import Foundation
 import Testing
 @testable import CmdExCore
 
+// TODO: [L-6] Add TestStore reducer tests for ShortcutsFeature and AppFeature.
+// These reducers live in the app target, not CmdExCore, so they can't be tested here.
+// Options: (a) move reducers to CmdExCore, or (b) create an app-level test target.
+
 // Note: These tests verify the core logic patterns used by ShortcutsFeature.
 // Full TestStore reducer tests require the app target's ShortcutsFeature
 // which lives outside CmdExCore. These test the dependency clients

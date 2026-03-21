@@ -26,6 +26,15 @@ public enum SBConstants {
     public static let defaultTerminalBundleId = "com.googlecode.iterm2"
 }
 
+/// Safe URL constants (avoids force-unwraps in view code).
+public enum SBURLs {
+    // swiftlint:disable force_unwrapping
+    public static let github = URL(string: "https://github.com/rlchandani/CmdEx")!
+    public static let author = URL(string: "https://rlchandani.dev/")!
+    public static let browserDiscovery = URL(string: "https://example.com")!
+    // swiftlint:enable force_unwrapping
+}
+
 /// SF Symbol names for command types.
 public enum SBIcon {
     public static func forCommandType(_ type: CommandType) -> String {

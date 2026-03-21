@@ -9,11 +9,20 @@ final class MenuBarManager: NSObject {
     private let store: StoreOf<AppFeature>
     private let converterController = TimeConverterWindowController()
     private let popover = PopoverManager()
+    // SAFETY: Only written once in registerHotKey() on the main actor, read in deinit
+    // which runs on the main actor for @MainActor classes. The nonisolated(unsafe) is
+    // required because deinit is technically nonisolated in Swift 6.
+    private nonisolated(unsafe) var hotKeyMonitor: Any?
 
     init(store: StoreOf<AppFeature>) {
         self.store = store
         super.init()
         setupStatusItem()
+        registerHotKey()
+    }
+
+    deinit {
+        if let monitor = hotKeyMonitor { NSEvent.removeMonitor(monitor) }
     }
 
     private func setupStatusItem() {
@@ -28,6 +37,18 @@ final class MenuBarManager: NSObject {
 
     @objc private func statusItemClicked(_ sender: NSStatusBarButton) {
         showPopover()
+    }
+
+    /// Registers Cmd+Shift+K as a global hotkey to toggle the popover.
+    private func registerHotKey() {
+        hotKeyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            // Cmd+Shift+K
+            guard event.modifierFlags.contains([.command, .shift]),
+                  event.keyCode == 40 else { return } // 40 = 'k'
+            Task { @MainActor [weak self] in
+                self?.showPopover()
+            }
+        }
     }
 
     // MARK: - Popover

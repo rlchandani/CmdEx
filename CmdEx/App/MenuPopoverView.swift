@@ -3,6 +3,9 @@ import ComposableArchitecture
 import CmdExCore
 import SwiftUI
 
+// NOTE: This view receives raw arrays and closures instead of a TCA Store because it is
+// rendered inside an NSPanel outside the SwiftUI view hierarchy. The popover is always
+// dismissed before any data mutations, so live state observation is not needed.
 struct MenuPopoverView: View {
     let shortcuts: [Shortcut]
     let groups: [ShortcutGroup]
@@ -52,6 +55,9 @@ struct MenuPopoverView: View {
 
     // MARK: - Sections
 
+    // NOTE: Date() is used directly here (not @Dependency(\.date)) because this is view-layer
+    // display logic, not reducer state. The time strip shows the current wall-clock time and
+    // is not part of the testable state machine.
     private func timeLabel(for tz: TimeZone) -> (abbr: String, time: String) {
         let now = Date()
         let fmt = DateFormatter()

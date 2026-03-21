@@ -15,6 +15,8 @@ public struct Shortcut: Identifiable, Codable, Equatable, Sendable {
     public var sortOrder: Int
     public var terminalBehavior: TerminalBehavior
 
+    /// Default parameter `UUID()` is intentional for convenience construction.
+    /// Reducer-created instances should pass `@Dependency(\.uuid)` explicitly for testability.
     public init(
         id: UUID = UUID(),
         title: String,
