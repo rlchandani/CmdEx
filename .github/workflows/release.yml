@@ -58,7 +58,9 @@ jobs:
           ditto -c -k --keepParent ./build/CmdEx.app "./build/CmdEx-${VERSION}.zip"
 
           SPARKLE_BIN=$(find ~/Library/Developer/Xcode/DerivedData/CmdEx-*/SourcePackages/artifacts/sparkle/Sparkle/bin -maxdepth 0 | head -1)
-          SIGN_OUTPUT=$("$SPARKLE_BIN/sign_update" "./build/CmdEx-${VERSION}.zip" -s "$SPARKLE_KEY")
+          echo "$SPARKLE_KEY" > /tmp/sparkle_key
+          SIGN_OUTPUT=$("$SPARKLE_BIN/sign_update" "./build/CmdEx-${VERSION}.zip" --ed-key-file /tmp/sparkle_key)
+          rm -f /tmp/sparkle_key
 
           ED_SIGNATURE=$(echo "$SIGN_OUTPUT" | grep -o 'edSignature="[^"]*"' | cut -d'"' -f2)
           LENGTH=$(echo "$SIGN_OUTPUT" | grep -o 'length="[^"]*"' | cut -d'"' -f2)
