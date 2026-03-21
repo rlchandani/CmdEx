@@ -1,0 +1,95 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check.outputs.should_release }}
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check version bump
+        id: check
+        run: |
+          VERSION=$(grep 'MARKETING_VERSION' project.yml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+            echo "Tag v$VERSION already exists — skipping release"
+          else
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+            echo "New version $VERSION detected — will release"
+          fi
+
+  release:
+    needs: check-version
+    if: needs.check-version.outputs.should_release == 'true'
+    runs-on: macos-15
+    env:
+      VERSION: ${{ needs.check-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build Release archive
+        run: |
+          xcodebuild -project CmdEx.xcodeproj -scheme CmdEx \
+            -configuration Release archive \
+            -archivePath ./build/CmdEx.xcarchive \
+            -skipMacroValidation
+
+      - name: Package and sign
+        env:
+          SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          cp -R ./build/CmdEx.xcarchive/Products/Applications/CmdEx.app ./build/CmdEx.app
+          ditto -c -k --keepParent ./build/CmdEx.app "./build/CmdEx-${VERSION}.zip"
+
+          SPARKLE_BIN=$(find ~/Library/Developer/Xcode/DerivedData/CmdEx-*/SourcePackages/artifacts/sparkle/Sparkle/bin -maxdepth 0 | head -1)
+          SIGN_OUTPUT=$("$SPARKLE_BIN/sign_update" "./build/CmdEx-${VERSION}.zip" -s "$SPARKLE_KEY")
+
+          ED_SIGNATURE=$(echo "$SIGN_OUTPUT" | grep -o 'edSignature="[^"]*"' | cut -d'"' -f2)
+          LENGTH=$(echo "$SIGN_OUTPUT" | grep -o 'length="[^"]*"' | cut -d'"' -f2)
+
+          cat > ./build/appcast.xml << EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+            <channel>
+              <title>CmdEx</title>
+              <item>
+                <title>Version ${VERSION}</title>
+                <sparkle:version>$(grep 'CURRENT_PROJECT_VERSION' project.yml | head -1 | sed 's/.*"\(.*\)"/\1/')</sparkle:version>
+                <sparkle:shortVersionString>${VERSION}</sparkle:shortVersionString>
+                <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+                <enclosure
+                  url="https://github.com/rlchandani/CmdEx/releases/download/v${VERSION}/CmdEx-${VERSION}.zip"
+                  length="${LENGTH}"
+                  type="application/octet-stream"
+                  sparkle:edSignature="${ED_SIGNATURE}"
+                />
+              </item>
+            </channel>
+          </rss>
+          EOF
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${VERSION}" \
+            "./build/CmdEx-${VERSION}.zip" \
+            ./build/appcast.xml \
+            --title "v${VERSION}" \
+            --generate-notes
