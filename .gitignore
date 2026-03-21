@@ -4,6 +4,7 @@ DerivedData/
 *.xcodeproj/xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
 ShortcutBar.app/
+CmdEx.app/
 IconConcepts/
 *.DS_Store
 build.log

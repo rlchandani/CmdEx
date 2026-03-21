@@ -1,4 +1,4 @@
-# SwiftLint configuration for ShortcutBar (aligned with Hex)
+# SwiftLint configuration for CmdEx (aligned with Hex)
 
 disabled_rules:
   - trailing_whitespace

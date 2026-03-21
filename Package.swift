@@ -2,19 +2,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "ShortcutBar",
+    name: "CmdEx",
     platforms: [.macOS(.v15)],
     dependencies: [
-        .package(path: "ShortcutBarCore"),
+        .package(path: "CmdExCore"),
     ],
     targets: [
         .executableTarget(
-            name: "ShortcutBar",
+            name: "CmdEx",
             dependencies: [
-                .product(name: "ShortcutBarCore", package: "ShortcutBarCore"),
+                .product(name: "CmdExCore", package: "CmdExCore"),
             ],
-            path: "ShortcutBar",
-            exclude: ["Info.plist", "ShortcutBar.entitlements"]
+            path: "CmdEx",
+            exclude: ["Info.plist", "CmdEx.entitlements"]
         ),
     ]
 )
