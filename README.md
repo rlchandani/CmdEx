@@ -1,6 +1,11 @@
 # CmdEx
 
-[![Download Latest Release](https://img.shields.io/github/v/release/rlchandani/CmdEx?label=Download&sort=semver)](https://github.com/rlchandani/CmdEx/releases/latest)
+[![Download](https://img.shields.io/github/v/release/rlchandani/CmdEx?label=Download&sort=semver)](https://github.com/rlchandani/CmdEx/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/rlchandani/CmdEx/total)](https://github.com/rlchandani/CmdEx/releases)
+[![Build](https://github.com/rlchandani/CmdEx/actions/workflows/release.yml/badge.svg)](https://github.com/rlchandani/CmdEx/actions/workflows/release.yml)
+[![License](https://img.shields.io/github/license/rlchandani/CmdEx)](https://github.com/rlchandani/CmdEx/blob/main/LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%2015%2B-blue)]()
+[![Swift](https://img.shields.io/badge/Swift-6.0-orange)]()
 
 A macOS menu bar shortcut manager. Launch apps, run shell commands, open URLs, and manage developer workflows — all from a single popover.
 
