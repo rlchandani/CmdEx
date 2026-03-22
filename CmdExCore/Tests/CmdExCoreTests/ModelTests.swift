@@ -115,17 +115,17 @@ struct AppSettingsTests {
         #expect(s.preferredTerminal == SBConstants.defaultTerminalBundleId)
         #expect(s.preferredBrowser.isEmpty)
         #expect(s.preferredEditor.isEmpty)
-        #expect(!s.launchAtLogin)
-        #expect(s.showTimeZoneClock)
         #expect(s.timeZoneIdentifiers == SBConstants.defaultTimeZoneIds)
         #expect(!s.screenshotWatcherEnabled)
+        #expect(!s.showDockIcon)
+        #expect(!s.showSettingsOnLaunch)
     }
 
     @Test("Round-trip encode/decode")
     func roundTrip() throws {
         var s = AppSettings()
         s.preferredBrowser = "com.google.Chrome"
-        s.launchAtLogin = true
+        s.showDockIcon = true
         let data = try JSONEncoder().encode(s)
         let decoded = try JSONDecoder().decode(AppSettings.self, from: data)
         #expect(decoded == s)

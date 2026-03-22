@@ -1,26 +1,26 @@
-import AppKit
 import ComposableArchitecture
 import Foundation
-import CmdExCore
 
 /// Owns shortcuts CRUD, groups, reordering, and execution.
 @Reducer
-struct ShortcutsFeature {
+public struct ShortcutsFeature {
     @ObservableState
-    struct State: Equatable {
-        var shortcuts: IdentifiedArrayOf<Shortcut> = []
-        var groups: IdentifiedArrayOf<ShortcutGroup> = []
-        var lastUsedValues: [String: [String: String]] = [:]
-        var recentIds: [Shortcut.ID] = []
-        var isLoading = false
-        @Shared(.appSettings) var settings: AppSettings
+    public struct State: Equatable {
+        public var shortcuts: IdentifiedArrayOf<Shortcut> = []
+        public var groups: IdentifiedArrayOf<ShortcutGroup> = []
+        public var lastUsedValues: [String: [String: String]] = [:]
+        public var recentIds: [Shortcut.ID] = []
+        public var isLoading = false
+        @Shared(.appSettings) public var settings: AppSettings
 
-        var recentShortcuts: [Shortcut] {
+        public init() {}
+
+        public var recentShortcuts: [Shortcut] {
             recentIds.compactMap { shortcuts[id: $0] }.prefix(3).map { $0 }
         }
     }
 
-    enum Action {
+    public enum Action {
         // Data
         case loadData
         case dataLoaded(StoreData)
@@ -49,19 +49,27 @@ struct ShortcutsFeature {
         case exportJSON
         case toggleScreenshotWatcher
         case screenshotDetected(path: String)
+
+        // Import/Export to file
+        case importFromFile(URL)
+        case importCompleted(StoreData)
+        case exportToFile(URL)
     }
 
     @Dependency(\.persistence) var persistence
     @Dependency(\.executor) var executor
     @Dependency(\.toast) var toast
     @Dependency(\.screenshotClient) var screenshotClient
+    @Dependency(\.clipboard) var clipboard
 
-    var body: some ReducerOf<Self> {
+    public init() {}
+
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .loadData:
                 state.isLoading = true
-                return .run { send in
+                return .run { [persistence] send in
                     let data = try await persistence.load()
                     await send(.dataLoaded(data))
                 }
@@ -136,7 +144,7 @@ struct ShortcutsFeature {
                 let browser = state.settings.preferredBrowser
                 let terminal = state.settings.preferredTerminal
                 let editor = state.settings.preferredEditor
-                return .run { send in
+                return .run { [executor] send in
                     let result: ExecutionResult
                     switch shortcut.commandType {
                     case .app:
@@ -188,15 +196,12 @@ struct ShortcutsFeature {
 
             case .exportJSON:
                 let shortcuts = Array(state.shortcuts)
-                return .run { [toast] _ in
+                return .run { [toast, clipboard] _ in
                     let encoder = JSONEncoder()
                     encoder.outputFormatting = .prettyPrinted
                     if let json = try? encoder.encode(shortcuts),
                        let str = String(data: json, encoding: .utf8) {
-                        await MainActor.run {
-                            NSPasteboard.general.clearContents()
-                            NSPasteboard.general.setString(str, forType: .string)
-                        }
+                        await clipboard.copyString(str)
                         await toast.show("Shortcuts copied as JSON")
                     }
                 }
@@ -204,19 +209,57 @@ struct ShortcutsFeature {
             case .toggleScreenshotWatcher:
                 state.$settings.withLock { $0.screenshotWatcherEnabled.toggle() }
                 let enabled = state.settings.screenshotWatcherEnabled
-                return .run { [toast, enabled] _ in
+                return .run { [toast, screenshotClient, enabled] _ in
                     await screenshotClient.setEnabled(enabled)
                     await toast.show("Screenshot watcher \(enabled ? "enabled" : "disabled")")
                 }
 
             case let .screenshotDetected(path):
-                return .run { [toast] _ in
-                    await MainActor.run {
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(path, forType: .string)
-                    }
+                return .run { [toast, clipboard] _ in
+                    await clipboard.copyString(path)
                     let filename = (path as NSString).lastPathComponent
                     await toast.show("Path copied: \(filename)")
+                }
+
+            // MARK: - File Import/Export
+
+            case let .importFromFile(url):
+                return .run { send in
+                    let data = try Data(contentsOf: url)
+                    let storeData = try JSONDecoder().decode(StoreData.self, from: data)
+                    await send(.importCompleted(storeData))
+                }
+
+            case let .importCompleted(storeData):
+                for shortcut in storeData.shortcuts {
+                    var s = shortcut
+                    s.sortOrder = (state.shortcuts.map(\.sortOrder).max() ?? -1) + 1
+                    state.shortcuts.append(s)
+                }
+                for group in storeData.groups {
+                    var g = group
+                    g.sortOrder = (state.groups.map(\.sortOrder).max() ?? -1) + 1
+                    state.groups.append(g)
+                }
+                return .merge(
+                    save(state),
+                    .run { [toast, count = storeData.shortcuts.count, gCount = storeData.groups.count] _ in
+                        await toast.show("✓ Imported \(count) shortcuts, \(gCount) groups")
+                    }
+                )
+
+            case let .exportToFile(url):
+                let data = StoreData(
+                    shortcuts: Array(state.shortcuts),
+                    groups: Array(state.groups),
+                    lastUsedValues: state.lastUsedValues
+                )
+                return .run { [toast] _ in
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                    let json = try encoder.encode(data)
+                    try json.write(to: url)
+                    await toast.show("✓ Exported to \(url.lastPathComponent)")
                 }
             }
         }
@@ -230,7 +273,7 @@ struct ShortcutsFeature {
             groups: Array(state.groups),
             lastUsedValues: state.lastUsedValues
         )
-        return .run { [toast] _ in
+        return .run { [toast, persistence] _ in
             do {
                 try await persistence.save(data)
             } catch {
@@ -244,17 +287,17 @@ struct ShortcutsFeature {
 // MARK: - State Helpers
 
 extension ShortcutsFeature.State {
-    func enabledShortcuts(inGroup groupId: ShortcutGroup.ID?) -> [Shortcut] {
+    public func enabledShortcuts(inGroup groupId: ShortcutGroup.ID?) -> [Shortcut] {
         shortcuts
             .filter { $0.isEnabled && $0.groupId == groupId }
             .sorted { $0.sortOrder < $1.sortOrder }
     }
 
-    var sortedGroups: [ShortcutGroup] {
+    public var sortedGroups: [ShortcutGroup] {
         groups.sorted { $0.sortOrder < $1.sortOrder }
     }
 
-    func getLastUsed(for shortcutId: Shortcut.ID) -> [String: String] {
+    public func getLastUsed(for shortcutId: Shortcut.ID) -> [String: String] {
         lastUsedValues[shortcutId.uuidString] ?? [:]
     }
 }

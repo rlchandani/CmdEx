@@ -13,6 +13,8 @@ final class MenuBarManager: NSObject {
     // which runs on the main actor for @MainActor classes. The nonisolated(unsafe) is
     // required because deinit is technically nonisolated in Swift 6.
     private nonisolated(unsafe) var hotKeyMonitor: Any?
+    // SAFETY: Same as hotKeyMonitor — written once in registerHotKey(), read in deinit.
+    private nonisolated(unsafe) var localHotKeyMonitor: Any?
 
     init(store: StoreOf<AppFeature>) {
         self.store = store
@@ -23,6 +25,7 @@ final class MenuBarManager: NSObject {
 
     deinit {
         if let monitor = hotKeyMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = localHotKeyMonitor { NSEvent.removeMonitor(monitor) }
     }
 
     private func setupStatusItem() {
@@ -41,13 +44,31 @@ final class MenuBarManager: NSObject {
 
     /// Registers Cmd+Shift+K as a global hotkey to toggle the popover.
     private func registerHotKey() {
+        // Global monitor — works when app is not focused (requires Accessibility permission)
         hotKeyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            // Cmd+Shift+K
             guard event.modifierFlags.contains([.command, .shift]),
-                  event.keyCode == 40 else { return } // 40 = 'k'
+                  event.keyCode == 40 else { return }
             Task { @MainActor [weak self] in
                 self?.showPopover()
             }
+        }
+
+        // Local monitor — works when app is focused
+        localHotKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard event.modifierFlags.contains([.command, .shift]),
+                  event.keyCode == 40 else { return event }
+            Task { @MainActor [weak self] in
+                self?.showPopover()
+            }
+            return nil
+        }
+
+        // Prompt for Accessibility permissions if not granted
+        if !AXIsProcessTrusted() {
+            // "AXTrustedCheckOptionPrompt" is the string value of kAXTrustedCheckOptionPrompt.
+            // Using the literal avoids Swift 6 concurrency warnings on the C global.
+            let options = ["AXTrustedCheckOptionPrompt": true] as CFDictionary
+            AXIsProcessTrustedWithOptions(options)
         }
     }
 

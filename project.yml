@@ -35,6 +35,13 @@ targets:
         SWIFT_STRICT_CONCURRENCY: complete
         ENABLE_HARDENED_RUNTIME: YES
         CODE_SIGN_STYLE: Automatic
+      configs:
+        Release:
+          DEAD_CODE_STRIPPING: YES
+          ENABLE_NS_ASSERTIONS: NO
+          VALIDATE_PRODUCT: YES
+          SWIFT_OPTIMIZATION_LEVEL: -O
+          GCC_OPTIMIZATION_LEVEL: s
     dependencies:
       - package: CmdExCore
         product: CmdExCore

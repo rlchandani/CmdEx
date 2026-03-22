@@ -24,6 +24,24 @@ public enum SBConstants {
 
     public static let defaultTimeZoneIds = ["UTC", "America/Los_Angeles"]
     public static let defaultTerminalBundleId = "com.googlecode.iterm2"
+
+    // MARK: - Changelog
+
+    public static let changelog = """
+    • Initial release
+    • Menu bar shortcut manager with groups and submenus
+    • App, shell, terminal, URL, file/folder, and editor commands
+    • Placeholder parameters with last-used memory
+    • iTerm2 support with Terminal.app fallback
+    • Configurable new tab / new window for terminal commands
+    • Drag-and-drop reordering for shortcuts and groups
+    • Configurable default terminal, browser, and text editor
+    • Screenshot watcher — copies new screenshot paths to clipboard
+    • Time converter with working hours indicators
+    • Toast notifications — non-intrusive HUD alerts
+    • Launch at login support
+    • Sparkle auto-updates
+    """
 }
 
 /// Safe URL constants (avoids force-unwraps in view code).

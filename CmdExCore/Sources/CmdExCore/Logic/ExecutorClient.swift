@@ -128,15 +128,39 @@ extension ExecutorClient: DependencyKey {
             process.standardError = pipe
             do {
                 try process.run()
+
+                // Read pipe data concurrently to avoid deadlock when buffer fills
+                let outputTask = Task.detached {
+                    pipe.fileHandleForReading.readDataToEndOfFile()
+                }
+
                 let status = await withCheckedContinuation { continuation in
                     process.terminationHandler = { p in
                         continuation.resume(returning: p.terminationStatus)
                     }
                 }
+
+                // 30-second timeout for reading remaining output
+                let outputData: Data
+                do {
+                    outputData = try await withThrowingTaskGroup(of: Data.self) { group in
+                        group.addTask { await outputTask.value }
+                        group.addTask {
+                            try await Task.sleep(for: .seconds(30))
+                            throw CancellationError()
+                        }
+                        let result = try await group.next()!
+                        group.cancelAll()
+                        return result
+                    }
+                } catch {
+                    outputData = Data()
+                }
+
                 if status == 0 {
                     return .success(title: "✓ Command completed")
                 }
-                let stderr = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+                let stderr = String(data: outputData, encoding: .utf8) ?? ""
                 logger.error("Shell failed (\(status)): \(stderr)")
                 return .failure(title: "✗ Command failed", detail: stderr)
             } catch {

@@ -4,7 +4,6 @@ import SwiftUI
 
 struct TimeZoneSettingsView: View {
     @Shared(.appSettings) var settings
-
     @State private var showingAddSheet = false
 
     private func removeZone(at index: Int) {
@@ -16,72 +15,55 @@ struct TimeZoneSettingsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                Text("Time Zones").font(.title2.bold())
-
-                SettingsComponents.card {
-                    VStack(spacing: 0) {
-                        ForEach(Array(settings.timeZoneIdentifiers.enumerated()), id: \.offset) { index, id in
-                            if index > 0 { Divider().padding(.horizontal, 12) }
-                            SettingsComponents.row {
-                                HStack {
-                                    let tz = TimeZone(identifier: id)
-                                    Text(workingHoursIndicator(for: tz))
-                                    Text(tz?.abbreviation() ?? id)
-                                        .font(.system(.body, design: .monospaced))
-                                        .frame(width: 50, alignment: .leading)
-                                    Text(friendlyName(id)).foregroundStyle(.secondary)
-                                    Spacer()
-                                    if settings.timeZoneIdentifiers.count > 1 {
-                                        Button {
-                                            removeZone(at: index)
-                                        } label: {
-                                            Image(systemName: "minus.circle.fill").foregroundStyle(.red)
-                                        }
-                                        .buttonStyle(.plain)
-                                    }
-                                }
-                            }
+        Form {
+            Section("Configured Zones") {
+                ForEach(Array(settings.timeZoneIdentifiers.enumerated()), id: \.offset) { index, id in
+                    HStack(alignment: .center, spacing: 8) {
+                        Image(systemName: "clock").settingsIcon()
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(friendlyName(id))
+                            Text("\(TimeZone(identifier: id)?.abbreviation() ?? id) · \(workingHoursIndicator(for: TimeZone(identifier: id)))")
+                                .settingsCaption()
                         }
-
-                        Divider().padding(.horizontal, 12)
-
-                        SettingsComponents.row {
-                            Button { showingAddSheet = true } label: {
-                                HStack {
-                                    Image(systemName: "plus.circle.fill").foregroundStyle(.green)
-                                    Text("Add Time Zone")
-                                }
+                        Spacer()
+                        if settings.timeZoneIdentifiers.count > 1 {
+                            Button {
+                                removeZone(at: index)
+                            } label: {
+                                Image(systemName: "minus.circle.fill").settingsIcon()
                             }
                             .buttonStyle(.plain)
                         }
                     }
                 }
 
-                SettingsComponents.card {
-                    SettingsComponents.row {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Indicators").font(.subheadline.bold())
-                            HStack(spacing: 16) {
-                                Label("Working (9a–6p)", systemImage: "circle.fill")
-                                    .foregroundStyle(.green).font(.caption)
-                                Label("Early/Late", systemImage: "circle.fill")
-                                    .foregroundStyle(.yellow).font(.caption)
-                                Label("Night", systemImage: "moon.fill")
-                                    .foregroundStyle(.secondary).font(.caption)
-                            }
+                Button { showingAddSheet = true } label: {
+                    Label {
+                        Text("Add Time Zone")
+                    } icon: {
+                        Image(systemName: "plus.circle.fill").settingsIcon()
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+
+            Section("Legend") {
+                HStack(alignment: .center, spacing: 8) {
+                    Image(systemName: "info.circle").settingsIcon()
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Working Hours Indicators")
+                        HStack(spacing: 16) {
+                            Text("🟢 Working (9a–6p)").settingsCaption()
+                            Text("🟡 Early/Late").settingsCaption()
+                            Text("🌙 Night").settingsCaption()
                         }
                     }
                 }
             }
-            .padding(24)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .formStyle(.grouped)
         .sheet(isPresented: $showingAddSheet) {
-            TimeZonePickerSheet(onAdd: { id in
-                addZone(id)
-            })
+            TimeZonePickerSheet(onAdd: { id in addZone(id) })
         }
     }
 
@@ -93,9 +75,9 @@ struct TimeZoneSettingsView: View {
         guard let tz else { return "❓" }
         let hour = Calendar.current.dateComponents(in: tz, from: Date()).hour ?? 0
         return switch hour {
-        case 9..<18: "🟢"
-        case 7..<9, 18..<21: "🟡"
-        default: "🌙"
+        case 9..<18: "🟢 Working"
+        case 7..<9, 18..<21: "🟡 Early/Late"
+        default: "🌙 Night"
         }
     }
 }

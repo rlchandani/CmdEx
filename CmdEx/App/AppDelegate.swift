@@ -4,7 +4,6 @@ import CmdExCore
 import ServiceManagement
 import Sparkle
 import SwiftUI
-import UserNotifications
 
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
@@ -13,7 +12,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     )
 
     static let appStore: Store<AppFeature.State, AppFeature.Action> = {
-        // Register live clients BEFORE store creation so TCA captures them
         ScreenshotClient.liveValue = ScreenshotClient(
             start: { ScreenshotWatcher.instance.start() },
             stop: { ScreenshotWatcher.instance.stop() },
@@ -22,6 +20,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         )
         ToastClient.liveValue = ToastClient(
             show: { ToastWindow.instance.showToast($0) }
+        )
+        ClipboardClient.liveValue = ClipboardClient(
+            copyString: { string in
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(string, forType: .string)
+            }
         )
         return Store(initialState: AppFeature.State()) { AppFeature() }
     }()
@@ -33,23 +37,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         SBLog.app.info("Application did finish launching")
         DiagnosticsLogging.bootstrapIfNeeded()
 
-        if Bundle.main.bundleIdentifier != nil {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
-        }
-
         menuBarManager = MenuBarManager(store: Self.appStore)
         Self.appStore.send(.task)
 
-        syncLaunchAtLogin()
         ScreenshotWatcher.instance.onScreenshotDetected = { path in
             Self.appStore.send(.shortcuts(.screenshotDetected(path: path)))
         }
         ScreenshotWatcher.instance.startIfEnabled()
+
+        // Apply dock icon preference
+        @Shared(.appSettings) var settings
+        NSApp.setActivationPolicy(settings.showDockIcon ? .regular : .accessory)
+
+        // Show settings window on launch if enabled
+        if settings.showSettingsOnLaunch {
+            openDashboard()
+        }
     }
 
     @objc func openDashboard() {
-        // Show in Dock and Cmd+Tab when preferences window is open
-        NSApp.setActivationPolicy(.regular)
+        @Shared(.appSettings) var settings
+        if settings.showDockIcon {
+            NSApp.setActivationPolicy(.regular)
+        }
 
         if let window = dashboardWindow {
             window.makeKeyAndOrderFront(nil)
@@ -77,21 +87,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         dashboardWindow = window
     }
 
-    private func syncLaunchAtLogin() {
-        @Shared(.appSettings) var settings
-        if settings.launchAtLogin {
-            try? SMAppService.mainApp.register()
-        } else {
-            try? SMAppService.mainApp.unregister()
-        }
-    }
-
     // MARK: - NSWindowDelegate
 
     nonisolated func windowWillClose(_ notification: Notification) {
         Task { @MainActor in
-            // Hide from Dock and Cmd+Tab when window closes
-            NSApp.setActivationPolicy(.accessory)
+            @Shared(.appSettings) var settings
+            if !settings.showDockIcon {
+                NSApp.setActivationPolicy(.accessory)
+            }
         }
     }
 }

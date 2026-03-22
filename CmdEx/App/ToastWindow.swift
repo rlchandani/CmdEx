@@ -20,7 +20,7 @@ class InvisibleWindow: NSPanel {
             styleMask: [.fullSizeContentView, .borderless, .utilityWindow, .nonactivatingPanel],
             backing: .buffered, defer: false
         )
-        level = .statusBar
+        level = .screenSaver
         backgroundColor = .clear
         isOpaque = false
         hasShadow = false

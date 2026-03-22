@@ -1,5 +1,7 @@
 # CmdEx
 
+[![Download Latest Release](https://img.shields.io/github/v/release/rlchandani/CmdEx?label=Download&sort=semver)](https://github.com/rlchandani/CmdEx/releases/latest)
+
 A macOS menu bar shortcut manager. Launch apps, run shell commands, open URLs, and manage developer workflows — all from a single popover.
 
 ## Features
@@ -17,7 +19,7 @@ A macOS menu bar shortcut manager. Launch apps, run shell commands, open URLs, a
 Built with [The Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) (TCA) and Swift 6 strict concurrency.
 
 - `AppFeature` → `ShortcutsFeature` via `Scope`
-- `@Dependency` clients: `ExecutorClient`, `PersistenceClient`, `ScreenshotClient`, `ToastClient`
+- `@Dependency` clients: `ExecutorClient`, `PersistenceClient`, `PermissionClient`, `ScreenshotClient`, `ToastClient`, `ClipboardClient`
 - `@Shared(.appSettings)` file storage — no UserDefaults
 - `IdentifiedArrayOf` for shortcuts and groups
 - Semantic typography and accessibility labels throughout
@@ -27,6 +29,31 @@ Built with [The Composable Architecture](https://github.com/pointfreeco/swift-co
 - macOS 15.0+
 - Xcode 16+
 - Swift 6.0
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
+
+## Development Setup
+
+### First-time setup
+
+1. **Install XcodeGen** (generates the `.xcodeproj` from `project.yml`):
+   ```bash
+   brew install xcodegen
+   ```
+
+2. **Generate the Xcode project**:
+   ```bash
+   xcodegen generate
+   ```
+
+3. **Trust SPM macro plugins** — Open the project in Xcode once and build (⌘B). Xcode will prompt you to trust macro plugins from swift-composable-architecture, swift-case-paths, swift-dependencies, swift-perception, and swift-sharing. Click "Trust & Enable" for each. This is a one-time step persisted in your local Xcode settings.
+
+4. **Code signing** — The project uses `CODE_SIGN_STYLE = Automatic` with the development team configured in `project.pbxproj`. Xcode resolves the signing identity automatically. No manual certificate setup is needed beyond having an Apple Developer account signed in to Xcode (Settings → Accounts).
+
+### Signing notes
+
+- The `project.pbxproj` has `DEVELOPMENT_TEAM` and `CODE_SIGN_STYLE = Automatic` pre-configured. Do **not** pass `DEVELOPMENT_TEAM` or `CODE_SIGN_IDENTITY` on the xcodebuild command line — this overrides the project settings and breaks SPM macro plugin signing.
+- CLI builds use `-skipMacroValidation` to bypass the macro trust prompt (which only works in Xcode GUI).
+- GitHub Actions CI also uses `-skipMacroValidation` and handles signing separately for distribution.
 
 ## Build
 
@@ -35,11 +62,55 @@ xcodegen generate
 xcodebuild -project CmdEx.xcodeproj -scheme CmdEx -configuration Debug build -skipMacroValidation
 ```
 
+The built app is at:
+```
+~/Library/Developer/Xcode/DerivedData/CmdEx-*/Build/Products/Debug/CmdEx.app
+```
+
+To run it:
+```bash
+open ~/Library/Developer/Xcode/DerivedData/CmdEx-*/Build/Products/Debug/CmdEx.app
+```
+
 ## Test
 
 ```bash
 cd CmdExCore && swift test
 ```
+
+Tests live in `CmdExCore/Tests/CmdExCoreTests/` and cover models, reducers, dependency clients, and feature logic. All tests use Swift Testing (`@Test`, `#expect`) — no XCTest.
+
+## Project Structure
+
+```
+CmdEx/                          # App target (SwiftUI views, AppKit integration)
+  App/                          # AppDelegate, MenuBarManager, PopoverManager, etc.
+  Features/                     # Views: Dashboard, Preferences, About, etc.
+CmdExCore/                      # Swift package (testable core logic)
+  Sources/CmdExCore/
+    AppFeature.swift            # Root TCA reducer
+    ShortcutsFeature.swift      # Shortcuts CRUD, execution, import/export
+    Models/                     # Shortcut, ShortcutGroup, AppSettings, etc.
+    Logic/                      # Dependency clients (Executor, Persistence, etc.)
+  Tests/CmdExCoreTests/         # All tests
+project.yml                     # XcodeGen spec (source of truth for project config)
+```
+
+## Permissions
+
+CmdEx requires these macOS permissions to function:
+
+| Permission | Why | How to grant |
+|---|---|---|
+| **Accessibility** | Global hotkey (⌘⇧K) | System Settings → Privacy & Security → Accessibility → toggle CmdEx on |
+| **Automation** | Send commands to Terminal/iTerm2 via AppleScript | Run a terminal shortcut once — macOS prompts automatically |
+| **Full Disk Access** | Shell commands accessing protected paths | System Settings → Privacy & Security → Full Disk Access → add CmdEx |
+
+The app checks permission status every 3 seconds and shows a warning banner when any are missing.
+
+### Resetting permissions (developer)
+
+There's a hidden Developer window accessible by tapping the version number 7 times in the About tab. It has a "Copy Command" button that copies a Terminal command to reset all TCC permissions and relaunch the app. Useful when testing the permission grant flow.
 
 ## Releasing New Versions
 
