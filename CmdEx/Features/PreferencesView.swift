@@ -352,30 +352,27 @@ struct DefaultAppsSettingsView: View {
         options: [(String, String)],
         allowSystemDefault: Bool
     ) -> some View {
-        Label {
-            HStack {
-                Text(label)
-                Spacer()
-                Picker("", selection: Binding(
-                    get: { selection.wrappedValue },
-                    set: { newValue in
-                        if newValue == Self.customTag {
-                            browseForApp(selection: selection)
-                        } else {
-                            selection.wrappedValue = newValue
-                        }
-                    }
-                )) {
-                    if allowSystemDefault { Text("System Default").tag("") }
-                    ForEach(options, id: \.0) { id, name in Text(name).tag(id) }
-                    Divider()
-                    Text("Custom…").tag(Self.customTag)
-                }
-                .labelsHidden()
-                .frame(width: 180)
-            }
-        } icon: {
+        HStack(alignment: .center, spacing: 8) {
             Image(systemName: icon).settingsIcon()
+            Text(label)
+            Spacer()
+            Picker("", selection: Binding(
+                get: { selection.wrappedValue },
+                set: { newValue in
+                    if newValue == Self.customTag {
+                        browseForApp(selection: selection)
+                    } else {
+                        selection.wrappedValue = newValue
+                    }
+                }
+            )) {
+                if allowSystemDefault { Text("System Default").tag("") }
+                ForEach(options, id: \.0) { id, name in Text(name).tag(id) }
+                Divider()
+                Text("Custom…").tag(Self.customTag)
+            }
+            .labelsHidden()
+            .frame(minWidth: 180, alignment: .trailing)
         }
     }
 
