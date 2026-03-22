@@ -18,6 +18,16 @@ A macOS menu bar shortcut manager. Launch apps, run shell commands, open URLs, a
 - **Time converter** — floating panel with day offset indicator
 - **Toast notifications** — non-intrusive HUD alerts
 - **Settings** — default apps, time zones, export/import, launch at login
+- **Sparkle auto-updates** — in-app update notifications
+
+## Setup
+
+On first launch, CmdEx will:
+1. Appear as a `⌘` icon in your menu bar (no Dock icon by default)
+2. Prompt for **Accessibility** permission (required for the global hotkey ⌘⇧K)
+3. Additional permissions (Automation, Full Disk Access) are requested as needed
+
+Press **⌘⇧K** from any app to open the popover, or click the menu bar icon.
 
 ## Architecture
 
@@ -36,7 +46,7 @@ Built with [The Composable Architecture](https://github.com/pointfreeco/swift-co
 - Swift 6.0
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
 
-## Development Setup
+## Development
 
 ### First-time setup
 
@@ -52,32 +62,32 @@ Built with [The Composable Architecture](https://github.com/pointfreeco/swift-co
 
 3. **Trust SPM macro plugins** — Open the project in Xcode once and build (⌘B). Xcode will prompt you to trust macro plugins from swift-composable-architecture, swift-case-paths, swift-dependencies, swift-perception, and swift-sharing. Click "Trust & Enable" for each. This is a one-time step persisted in your local Xcode settings.
 
-4. **Code signing** — The project uses `CODE_SIGN_STYLE = Automatic` with the development team configured in `project.pbxproj`. Xcode resolves the signing identity automatically. No manual certificate setup is needed beyond having an Apple Developer account signed in to Xcode (Settings → Accounts).
+4. **Code signing** — The project uses `CODE_SIGN_STYLE = Automatic` with `DEVELOPMENT_TEAM` configured in `project.yml`. Xcode resolves the signing identity automatically. No manual certificate setup is needed beyond having an Apple Developer account signed in to Xcode (Settings → Accounts).
 
-### Signing notes
+### Building
 
-- The `project.pbxproj` has `DEVELOPMENT_TEAM` and `CODE_SIGN_STYLE = Automatic` pre-configured. Do **not** pass `DEVELOPMENT_TEAM` or `CODE_SIGN_IDENTITY` on the xcodebuild command line — this overrides the project settings and breaks SPM macro plugin signing.
-- CLI builds use `-skipMacroValidation` to bypass the macro trust prompt (which only works in Xcode GUI).
-- GitHub Actions CI also uses `-skipMacroValidation` and handles signing separately for distribution.
+Open in Xcode (recommended):
 
-## Build
+```bash
+xcodegen generate
+open CmdEx.xcodeproj
+```
+
+Or build from the command line:
 
 ```bash
 xcodegen generate
 xcodebuild -project CmdEx.xcodeproj -scheme CmdEx -configuration Debug build -skipMacroValidation
 ```
 
+`-skipMacroValidation` is required because several SPM dependencies (TCA, swift-dependencies, swift-case-paths, swift-perception) use Swift macros. Xcode trusts them automatically via its UI; the CLI requires the flag.
+
 The built app is at:
 ```
 ~/Library/Developer/Xcode/DerivedData/CmdEx-*/Build/Products/Debug/CmdEx.app
 ```
 
-To run it:
-```bash
-open ~/Library/Developer/Xcode/DerivedData/CmdEx-*/Build/Products/Debug/CmdEx.app
-```
-
-## Test
+### Testing
 
 ```bash
 cd CmdExCore && swift test
@@ -85,18 +95,26 @@ cd CmdExCore && swift test
 
 Tests live in `CmdExCore/Tests/CmdExCoreTests/` and cover models, reducers, dependency clients, and feature logic. All tests use Swift Testing (`@Test`, `#expect`) — no XCTest.
 
+### Code Signing
+
+The project uses `CODE_SIGN_STYLE = Automatic`. Debug builds sign with "Apple Development" — make sure you have a valid Apple Development certificate in your keychain and your team is selected in Xcode's Signing & Capabilities tab.
+
+- The `project.yml` has `DEVELOPMENT_TEAM` and `CODE_SIGN_STYLE = Automatic` pre-configured. Do **not** pass `DEVELOPMENT_TEAM` or `CODE_SIGN_IDENTITY` on the xcodebuild command line — this overrides the project settings and breaks SPM macro plugin signing.
+- CLI builds use `-skipMacroValidation` to bypass the macro trust prompt (which only works in Xcode GUI).
+- GitHub Actions CI also uses `-skipMacroValidation` and handles signing via an imported certificate.
+
 ## Project Structure
 
 ```
 CmdEx/                          # App target (SwiftUI views, AppKit integration)
-  App/                          # AppDelegate, MenuBarManager, PopoverManager, etc.
-  Features/                     # Views: Dashboard, Preferences, About, etc.
+  App/                          # AppDelegate, MenuBarManager, PopoverManager, ToastWindow, etc.
+  Features/                     # Views: Dashboard, Preferences, DeveloperWindow, etc.
 CmdExCore/                      # Swift package (testable core logic)
   Sources/CmdExCore/
     AppFeature.swift            # Root TCA reducer
     ShortcutsFeature.swift      # Shortcuts CRUD, execution, import/export
     Models/                     # Shortcut, ShortcutGroup, AppSettings, etc.
-    Logic/                      # Dependency clients (Executor, Persistence, etc.)
+    Logic/                      # Dependency clients (Executor, Persistence, Permission, etc.)
   Tests/CmdExCoreTests/         # All tests
 project.yml                     # XcodeGen spec (source of truth for project config)
 ```
@@ -111,15 +129,24 @@ CmdEx requires these macOS permissions to function:
 | **Automation** | Send commands to Terminal/iTerm2 via AppleScript | Run a terminal shortcut once — macOS prompts automatically |
 | **Full Disk Access** | Shell commands accessing protected paths | System Settings → Privacy & Security → Full Disk Access → add CmdEx |
 
-The app checks permission status every 3 seconds and shows a warning banner when any are missing.
+The app checks permission status every 3 seconds and shows a warning banner when any are missing, with a "Fix" button that navigates to the Permissions section.
 
 ### Resetting permissions (developer)
 
-There's a hidden Developer window accessible by tapping the version number 7 times in the About tab. It has a "Copy Command" button that copies a Terminal command to reset all TCC permissions and relaunch the app. Useful when testing the permission grant flow.
+Reset individual services — **never use `tccutil reset All`** as it can freeze macOS:
 
-## Releasing New Versions
+```bash
+tccutil reset Accessibility com.cmdex.app && \
+tccutil reset AppleEvents com.cmdex.app && \
+tccutil reset ListenEvent com.cmdex.app && \
+tccutil reset SystemPolicyAllFiles com.cmdex.app
+```
 
-Releases are automated via GitHub Actions. When you push to `main` with a new version number, the workflow builds, signs, and publishes a GitHub Release automatically.
+There's also a hidden Developer window (tap the version number 7 times in Settings → About) with a "Copy Command" button that generates the correct reset + relaunch command for the current build.
+
+## Releasing
+
+Releases are automated via GitHub Actions. Bump the version, push to `main`, and the workflow handles the rest.
 
 ### How to release
 
@@ -147,18 +174,16 @@ Users running CmdEx are notified of the update via Sparkle and can install it wi
 
 ### Setup (one-time)
 
-The `SPARKLE_PRIVATE_KEY` GitHub secret must be set for signing. To export your key:
+Set the `SPARKLE_PRIVATE_KEY` GitHub secret for Sparkle update signing:
 
 ```bash
-# From the Sparkle bin in DerivedData:
+# Export your Sparkle EdDSA key:
 generate_keys -x /tmp/sparkle_key.txt
 gh secret set SPARKLE_PRIVATE_KEY < /tmp/sparkle_key.txt
 rm /tmp/sparkle_key.txt
 ```
 
 ### Manual release
-
-If you need to release manually without the workflow:
 
 ```bash
 # Build
@@ -178,9 +203,36 @@ gh release create v1.1.0 ./build/CmdEx-1.1.0.zip ./build/appcast.xml \
   --title "v1.1.0" --generate-notes
 ```
 
+### Debugging CI failures
+
+List recent workflow runs:
+```bash
+gh run list --repo rlchandani/CmdEx --limit 10
+```
+
+View a specific failed run (use the run ID from the list):
+```bash
+gh run view <RUN_ID> --repo rlchandani/CmdEx
+```
+
+Find the failed job ID:
+```bash
+gh run view <RUN_ID> --repo rlchandani/CmdEx --json jobs --jq '.jobs[] | "\(.databaseId) \(.name) \(.conclusion)"'
+```
+
+Get the failed job's logs:
+```bash
+gh run view --log-failed --job=<JOB_ID> --repo rlchandani/CmdEx
+```
+
+Common failures:
+- **"No signing certificate found"** — `MACOS_CERTIFICATE` secret is missing or the `.p12` is invalid.
+- **"failed downloading Sparkle"** — stale SPM cache on CI runner. The workflow clears it automatically.
+- **"Library Validation failed"** — app and frameworks signed with different identities. Ensure `DEVELOPMENT_TEAM` is set in `project.yml`.
+
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
 
 ## Author
 
