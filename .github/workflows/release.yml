@@ -69,6 +69,9 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
+      - name: Clean SPM cache
+        run: rm -rf ~/Library/Caches/org.swift.swiftpm
+
       - name: Build Release archive
         run: |
           xcodebuild -project CmdEx.xcodeproj -scheme CmdEx \
