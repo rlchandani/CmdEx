@@ -27,6 +27,7 @@
 		BDFC80EF465C50931BA846DF /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA87D9BA2C7B8A0062EB1A74 /* DashboardView.swift */; };
 		BE139369FAC24AD14C3C3732 /* TimeZoneSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72982D530D4CD3A52D087A5 /* TimeZoneSettingsView.swift */; };
 		C4D4F0D623C6C131FF142198 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A46B8ACAAAB0C30705C2CB /* AppDelegate.swift */; };
+		CD94B5D49E81E7C4DAE341B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5663EEDD4B78A918FFFCF9 /* Assets.xcassets */; };
 		D237E2EAF85B0E50F6BFFD2D /* ToastWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D72327F03FEF2E442B81798 /* ToastWindow.swift */; };
 		D39CD0A707BDCB1BE1ABCC97 /* ReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3E1B5079592688A0C6E43 /* ReducerTests.swift */; };
 		D4E05576D29D655A33EB6AC9 /* sample_store.json in Resources */ = {isa = PBXBuildFile; fileRef = C41CB2E6A072E2A9B5A08A85 /* sample_store.json */; };
@@ -56,6 +57,7 @@
 		34B3E1B5079592688A0C6E43 /* ReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducerTests.swift; sourceTree = "<group>"; };
 		3731073644ADC0B1A038E527 /* DeveloperWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperWindow.swift; sourceTree = "<group>"; };
 		3B8D4C0FD0BF6826CC0FD761 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		3D5663EEDD4B78A918FFFCF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C98B3EDF542B6B66C113CBB /* ShortcutEditSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutEditSheet.swift; sourceTree = "<group>"; };
 		6950EB4B4761D45998075753 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		72FB6D9186F673AC4F570F04 /* ShortcutsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsFeatureTests.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		194BD00C2241C18667A4645C /* CmdEx */ = {
 			isa = PBXGroup;
 			children = (
+				3D5663EEDD4B78A918FFFCF9 /* Assets.xcassets */,
 				DE601CFA382B73393C1FFD05 /* CmdEx.entitlements */,
 				8FA024456D4E217F5EFD060C /* Info.plist */,
 				A538DB2E38745C414CD0B963 /* Localizable.xcstrings */,
@@ -310,6 +313,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD94B5D49E81E7C4DAE341B3 /* Assets.xcassets in Resources */,
 				B1F2D97EBCB9CD496211416E /* Localizable.xcstrings in Resources */,
 				017192607A9EB2874C112242 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -531,7 +535,7 @@
 				CODE_SIGN_ENTITLEMENTS = CmdEx/CmdEx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 5D7M37QQLU;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -541,7 +545,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cmdex.app;
 				PRODUCT_NAME = CmdEx;
 				SDKROOT = macosx;
@@ -574,7 +578,7 @@
 				CODE_SIGN_ENTITLEMENTS = CmdEx/CmdEx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 5D7M37QQLU;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -587,7 +591,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cmdex.app;
 				PRODUCT_NAME = CmdEx;
 				SDKROOT = macosx;

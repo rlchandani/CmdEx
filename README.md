@@ -1,9 +1,9 @@
-# CmdEx
+# CmdEx — Shortcut Bar
 
-[![Download](https://img.shields.io/github/v/release/rlchandani/CmdEx?label=Download&sort=semver)](https://github.com/rlchandani/CmdEx/releases/latest)
+[![Release](https://github.com/rlchandani/CmdEx/actions/workflows/release.yml/badge.svg)](https://github.com/rlchandani/CmdEx/actions/workflows/release.yml)
+[![Version](https://img.shields.io/badge/version-1.5.0-green)](https://github.com/rlchandani/CmdEx/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/rlchandani/CmdEx/total)](https://github.com/rlchandani/CmdEx/releases)
-[![Build](https://github.com/rlchandani/CmdEx/actions/workflows/release.yml/badge.svg)](https://github.com/rlchandani/CmdEx/actions/workflows/release.yml)
-[![License](https://img.shields.io/github/license/rlchandani/CmdEx)](https://github.com/rlchandani/CmdEx/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/rlchandani/CmdEx/blob/main/LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%2015%2B-blue)]()
 [![Swift](https://img.shields.io/badge/Swift-6.0-orange)]()
 
@@ -23,7 +23,7 @@ A macOS menu bar shortcut manager. Launch apps, run shell commands, open URLs, a
 ## Setup
 
 On first launch, CmdEx will:
-1. Appear as a `⌘` icon in your menu bar (no Dock icon by default)
+1. Appear in your menu bar (no Dock icon by default)
 2. Prompt for **Accessibility** permission (required for the global hotkey ⌘⇧K)
 3. Additional permissions (Automation, Full Disk Access) are requested as needed
 
@@ -48,22 +48,6 @@ Built with [The Composable Architecture](https://github.com/pointfreeco/swift-co
 
 ## Development
 
-### First-time setup
-
-1. **Install XcodeGen** (generates the `.xcodeproj` from `project.yml`):
-   ```bash
-   brew install xcodegen
-   ```
-
-2. **Generate the Xcode project**:
-   ```bash
-   xcodegen generate
-   ```
-
-3. **Trust SPM macro plugins** — Open the project in Xcode once and build (⌘B). Xcode will prompt you to trust macro plugins from swift-composable-architecture, swift-case-paths, swift-dependencies, swift-perception, and swift-sharing. Click "Trust & Enable" for each. This is a one-time step persisted in your local Xcode settings.
-
-4. **Code signing** — The project uses `CODE_SIGN_STYLE = Automatic` with `DEVELOPMENT_TEAM` configured in `project.yml`. Xcode resolves the signing identity automatically. No manual certificate setup is needed beyond having an Apple Developer account signed in to Xcode (Settings → Accounts).
-
 ### Building
 
 Open in Xcode (recommended):
@@ -81,11 +65,6 @@ xcodebuild -project CmdEx.xcodeproj -scheme CmdEx -configuration Debug build -sk
 ```
 
 `-skipMacroValidation` is required because several SPM dependencies (TCA, swift-dependencies, swift-case-paths, swift-perception) use Swift macros. Xcode trusts them automatically via its UI; the CLI requires the flag.
-
-The built app is at:
-```
-~/Library/Developer/Xcode/DerivedData/CmdEx-*/Build/Products/Debug/CmdEx.app
-```
 
 ### Testing
 
@@ -109,6 +88,7 @@ The project uses `CODE_SIGN_STYLE = Automatic`. Debug builds sign with "Apple De
 CmdEx/                          # App target (SwiftUI views, AppKit integration)
   App/                          # AppDelegate, MenuBarManager, PopoverManager, ToastWindow, etc.
   Features/                     # Views: Dashboard, Preferences, DeveloperWindow, etc.
+  Assets.xcassets/              # App icon and menu bar icon
 CmdExCore/                      # Swift package (testable core logic)
   Sources/CmdExCore/
     AppFeature.swift            # Root TCA reducer
@@ -120,8 +100,6 @@ project.yml                     # XcodeGen spec (source of truth for project con
 ```
 
 ## Permissions
-
-CmdEx requires these macOS permissions to function:
 
 | Permission | Why | How to grant |
 |---|---|---|
@@ -152,15 +130,15 @@ Releases are automated via GitHub Actions. Bump the version, push to `main`, and
 
 1. Bump `MARKETING_VERSION` in `project.yml`:
    ```yaml
-   MARKETING_VERSION: "1.1.0"
+   MARKETING_VERSION: "1.5.0"
    ```
 2. Bump `CURRENT_PROJECT_VERSION` if needed:
    ```yaml
-   CURRENT_PROJECT_VERSION: "2"
+   CURRENT_PROJECT_VERSION: "6"
    ```
 3. Commit and push:
    ```bash
-   git add -A && git commit -m "chore: bump version to 1.1.0"
+   git add -A && git commit -m "chore: bump version to 1.5.0"
    git push origin main
    ```
 4. GitHub Actions automatically:
@@ -168,7 +146,7 @@ Releases are automated via GitHub Actions. Bump the version, push to `main`, and
    - Builds a Release archive on macOS
    - Zips and signs the `.app` with Sparkle EdDSA
    - Generates `appcast.xml`
-   - Creates a GitHub Release (`v1.1.0`) with the zip and appcast
+   - Creates a GitHub Release (`v1.5.0`) with the zip and appcast
 
 Users running CmdEx are notified of the update via Sparkle and can install it with one click.
 
@@ -177,7 +155,6 @@ Users running CmdEx are notified of the update via Sparkle and can install it wi
 Set the `SPARKLE_PRIVATE_KEY` GitHub secret for Sparkle update signing:
 
 ```bash
-# Export your Sparkle EdDSA key:
 generate_keys -x /tmp/sparkle_key.txt
 gh secret set SPARKLE_PRIVATE_KEY < /tmp/sparkle_key.txt
 rm /tmp/sparkle_key.txt
@@ -193,14 +170,14 @@ xcodebuild -project CmdEx.xcodeproj -scheme CmdEx -configuration Release archive
 
 # Package
 cp -R ./build/CmdEx.xcarchive/Products/Applications/CmdEx.app ./build/CmdEx.app
-ditto -c -k --keepParent ./build/CmdEx.app ./build/CmdEx-1.1.0.zip
+ditto -c -k --keepParent ./build/CmdEx.app ./build/CmdEx-1.5.0.zip
 
 # Sign (prints edSignature and length for appcast.xml)
-sign_update ./build/CmdEx-1.1.0.zip
+sign_update ./build/CmdEx-1.5.0.zip
 
 # Create release
-gh release create v1.1.0 ./build/CmdEx-1.1.0.zip ./build/appcast.xml \
-  --title "v1.1.0" --generate-notes
+gh release create v1.5.0 ./build/CmdEx-1.5.0.zip ./build/appcast.xml \
+  --title "v1.5.0" --generate-notes
 ```
 
 ### Debugging CI failures
